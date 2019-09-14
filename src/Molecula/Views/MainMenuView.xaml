@@ -1,0 +1,17 @@
+﻿<pwin:AppWindow
+    x:Class="Molecula.Views.MainMenuView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pdock="http://schemas.pamucuk.com/pamucuk/2019/docking/xaml"
+    xmlns:pwin="http://schemas.pamucuk.com/pamucuk/2019/windows/xaml"
+    Title="{DynamicResource MainMenu.Window.Title}"
+    Width="800"
+    Height="450"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <pdock:DockingManager>
+        <pdock:DockingGroup Orientation="Horizontal" />
+    </pdock:DockingManager>
+</pwin:AppWindow>

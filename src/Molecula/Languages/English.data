@@ -1,0 +1,9 @@
+﻿Login.Window.Title=Molecula - Login
+Login.System.Label=System:
+Login.User.Label=User:
+Login.Password.Label=Password:
+Login.Language.Label=Language:
+Login.Login.Button=Login
+Login.Cancel.Button=Cancel
+
+MainMenu.Window.Title=Molecula - Main Menu
