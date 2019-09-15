@@ -1,7 +1,17 @@
 ﻿<Application
     x:Class="Molecula.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:Molecula">
-    <Application.Resources />
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/molecula;component/resources/Login.xaml" />
+                <ResourceDictionary Source="/molecula;component/resources/MainMenu.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="Ribbon">
+                <Setter Property="Background" Value="#01FFFFFF" />
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
 </Application>

@@ -1,6 +1,11 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using Molecula.Abstractions.Services;
+using Molecula.Abstractions.ViewModels;
 using Molecula.Bootstrapping;
-using Molecula.Views;
+using Molecula.UI.Windows;
+using Molecula.ViewModels;
 using Pamucuk.Mvvm.Ioc;
 
 namespace Molecula
@@ -22,11 +27,13 @@ namespace Molecula
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            var mainMenu = _locator.Get<MainMenuView>();
-            var login = _locator.Get<LoginView>();
-            mainMenu.Show();
-            if(login.ShowDialog() != true)
-                mainMenu.Close();
+            var mainMenu = _locator.Get<IMainMenuViewModel>();
+            var login = _locator.Get<ILoginViewModel>();
+            var windowManager = _locator.Get<IWindowManager>();
+            windowManager.OpenWindow(mainMenu);
+            Application.Current.ShutdownMode = ShutdownMode.OnLastWindowClose;
+            if(windowManager.OpenDialog(login, mainMenu) != true)
+                windowManager.CloseWindow(mainMenu);
         }
     }
 }

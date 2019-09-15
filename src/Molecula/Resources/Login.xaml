@@ -1,0 +1,53 @@
+﻿<ResourceDictionary x:Class="Molecula.Resources.Login"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:play="http://schemas.pamucuk.com/pamucuk/2019/layout/xaml"
+                    xmlns:extensions="clr-namespace:Molecula.UI.Extensions;assembly=Molecula.UI"
+                    xmlns:pwin="http://schemas.pamucuk.com/pamucuk/2019/windows/xaml"
+                    xmlns:viewModels1="clr-namespace:Molecula.ViewModels"
+                    xmlns:viewModels="clr-namespace:Molecula.Abstractions.ViewModels;assembly=Molecula.Abstractions">
+
+    <DataTemplate x:Key="Login.Content.Template" DataType="{x:Type viewModels:ILoginViewModel}">
+        <Border
+                Margin="5"
+                BorderBrush="Black"
+                BorderThickness="1">
+            <play:ItemGroup Margin="5" Orientation="Vertical">
+                <play:LabelItem Label="{DynamicResource Login.System.Label}">
+                    <ComboBox ItemsSource="{Binding AvailableSystems}" SelectedItem="{Binding System}" />
+                </play:LabelItem>
+                <play:LabelItem Label="{DynamicResource Login.User.Label}">
+                    <TextBox Text="{Binding User}" />
+                </play:LabelItem>
+                <play:LabelItem Label="{DynamicResource Login.Password.Label}">
+                    <PasswordBox PasswordChanged="OnPasswordChanged" PreviewKeyUp="OnPasswordPreviewKeyUp" />
+                </play:LabelItem>
+                <play:LabelItem Label="{DynamicResource Login.Language.Label}">
+                    <ComboBox
+                            extensions:LanguageManager.CurrentLanguage="{Binding SelectedItem, RelativeSource={RelativeSource Self}}"
+                            ItemsSource="{x:Static extensions:LanguageManager.AvailableLanguages}"
+                            SelectedItem="{x:Static extensions:LanguageManager.DefaultLanguage}" />
+                </play:LabelItem>
+                <play:ItemGroup Margin="0,5,0,0" Orientation="Horizontal">
+                    <Button
+                            Margin="0,0,2,0"
+                            Command="{Binding LoginCommand}"
+                            Content="{DynamicResource Login.Login.Button}" />
+                    <Button
+                            Margin="2,0,0,0"
+                            Command="{Binding CancelLoginCommand}"
+                            Content="{DynamicResource Login.Cancel.Button}" />
+                </play:ItemGroup>
+            </play:ItemGroup>
+        </Border>
+    </DataTemplate>
+
+    <Style x:Key="Login.Window.Style" TargetType="pwin:AppWindow">
+        <Setter Property="Title" Value="{DynamicResource Login.Window.Title}" />
+        <Setter Property="Width" Value="400" />
+        <Setter Property="SizeToContent" Value="Height" />
+        <Setter Property="WindowState" Value="Normal" />
+        <Setter Property="ContentTemplate" Value="{DynamicResource Login.Content.Template}" />
+    </Style>
+
+</ResourceDictionary>
