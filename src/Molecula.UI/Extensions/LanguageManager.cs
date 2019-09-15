@@ -42,11 +42,12 @@ namespace Molecula.UI.Extensions
 
         private static Dictionary<string, string> LoadLanguage(string language)
         {
-            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, LanguageSubfolder,
+            var filePath = Path.Combine(Path.GetDirectoryName(typeof(LanguageManager).Assembly.Location), LanguageSubfolder,
                 $"{language}{LanguageExtension}");
             var lines = File.ReadAllLines(filePath);
             var data = lines
                 .Where(line => !string.IsNullOrWhiteSpace(line))
+                .Where(line => !line.TrimStart().StartsWith("#"))
                 .ToDictionary(line => line.Substring(0, line.IndexOf('=')).Trim(),
                     line => line.Substring(line.IndexOf('=') + 1));
             return data;

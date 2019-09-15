@@ -22,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SqlServer", "SqlServer", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Molecula.UI", "Molecula.UI\Molecula.UI.csproj", "{5E043799-C6B6-4EDE-9995-2404B9C8B059}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Molecula.Abstractions", "Molecula.Abstractions\Molecula.Abstractions.csproj", "{A63FD3FE-1AFA-42F7-956A-5DD80A0BD4DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +38,10 @@ Global
 		{5E043799-C6B6-4EDE-9995-2404B9C8B059}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E043799-C6B6-4EDE-9995-2404B9C8B059}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E043799-C6B6-4EDE-9995-2404B9C8B059}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A63FD3FE-1AFA-42F7-956A-5DD80A0BD4DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A63FD3FE-1AFA-42F7-956A-5DD80A0BD4DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A63FD3FE-1AFA-42F7-956A-5DD80A0BD4DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A63FD3FE-1AFA-42F7-956A-5DD80A0BD4DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
