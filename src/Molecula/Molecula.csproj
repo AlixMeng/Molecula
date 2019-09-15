@@ -35,14 +35,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Pamucuk.Mvvm, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Pamucuk.Mvvm.2.0.0\lib\net471\Pamucuk.Mvvm.dll</HintPath>
+    <Reference Include="Pamucuk.Mvvm, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Pamucuk.Mvvm.2.4.0\lib\net48\Pamucuk.Mvvm.dll</HintPath>
     </Reference>
-    <Reference Include="Pamucuk.UI, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Pamucuk.UI.2.1.0\lib\net471\Pamucuk.UI.dll</HintPath>
+    <Reference Include="Pamucuk.UI, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Pamucuk.UI.2.4.0\lib\net48\Pamucuk.UI.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Controls.Ribbon" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Expression.Blend.Sdk.1.0.2\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -65,29 +66,16 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bootstrapping\Bootstrapper.cs" />
-    <Compile Include="ViewModels\ILoginViewModel.cs" />
-    <Compile Include="ViewModels\IMainMenuViewModel.cs" />
+    <Compile Include="Resources\Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainMenuViewModel.cs" />
-    <Compile Include="Views\MainMenuView.xaml.cs">
-      <DependentUpon>MainMenuView.xaml</DependentUpon>
-    </Compile>
-    <Page Include="Views\LoginView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Views\LoginView.xaml.cs">
-      <DependentUpon>LoginView.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="Views\MainMenuView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Compile Include="ViewModels\ProgramViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -123,10 +111,40 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Molecula.Abstractions\Molecula.Abstractions.csproj">
+      <Project>{a63fd3fe-1afa-42f7-956a-5dd80a0bd4de}</Project>
+      <Name>Molecula.Abstractions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Molecula.UI\Molecula.UI.csproj">
       <Project>{5e043799-c6b6-4ede-9995-2404b9c8b059}</Project>
       <Name>Molecula.UI</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Programs\Orders.xaml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Programs\ResultsByMethod.xaml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Programs\ResultsBySample.xaml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Programs\Samples.xaml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Page Include="Resources\Login.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\MainMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
