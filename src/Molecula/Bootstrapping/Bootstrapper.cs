@@ -1,6 +1,14 @@
-﻿using Molecula.ViewModels;
-using Molecula.Views;
+﻿using System;
+using System.Windows;
+using Molecula.Abstractions.Services;
+using Molecula.Abstractions.ViewModels;
+using Molecula.UI.Programs;
+using Molecula.UI.Windows;
+using Molecula.ViewModels;
+using Pamucuk.Mvvm.Commands;
 using Pamucuk.Mvvm.Ioc;
+using Pamucuk.Mvvm.ViewModels;
+using Pamucuk.UI.Controls.Windows;
 
 namespace Molecula.Bootstrapping
 {
@@ -19,35 +27,37 @@ namespace Molecula.Bootstrapping
             RegisterViews();
 
             Locator = new Locator(_ioc);
+            _ioc.Register(() => Locator);
         }
 
         public void RegisterServices()
         {
-
+            _ioc.Register<RelayCommandFactory, ICommandFactory>();
+            _ioc.Register<WindowManager, IWindowManager>();
+            _ioc.Register<ProgramManager, IProgramManager>();
         }
 
         public void RegisterViewModels()
         {
             _ioc.Register<LoginViewModel, ILoginViewModel>();
             _ioc.Register<MainMenuViewModel, IMainMenuViewModel>();
+            _ioc.Register<Func<string, IViewModelBase>>(
+                () =>
+                    programId =>
+                    {
+                        var vm = new ProgramViewModel(programId);
+                        return vm;
+                    });
         }
 
         public void RegisterViews()
         {
-            _ioc.Register<LoginView>(() =>
+            _ioc.Register<Window>(() =>
             {
-                var login = new LoginView();
-                LocatorExtension.SetLocator(login, Locator);
-                return login;
-            });
-
-            _ioc.Register<MainMenuView>(() =>
-            {
-                var mainMenu = new MainMenuView();
-                LocatorExtension.SetLocator(mainMenu, Locator);
-                return mainMenu;
+                var window = new AppWindow();
+                LocatorExtension.SetLocator(window, Locator);
+                return window;
             });
         }
-
     }
 }

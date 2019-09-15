@@ -1,0 +1,37 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:pdock="http://schemas.pamucuk.com/pamucuk/2019/docking/xaml"
+    xmlns:play="http://schemas.pamucuk.com/pamucuk/2019/layout/xaml"
+    xmlns:pwin="http://schemas.pamucuk.com/pamucuk/2019/windows/xaml"
+    xmlns:viewModels1="clr-namespace:Molecula.Abstractions.ViewModels;assembly=Molecula.Abstractions">
+
+    <Geometry x:Key="Samples.QuickStartButton.Icon.Geometry">F1 M 28,18L 48,18L 48,22L 45,22L 45,29L 57,52L 54,58L 22,58L 19,52L 31,29L 31,22L 28,22L 28,18 Z M 28,54L 37,36L 43.8461,36L 41,31L 41,22L 35,22L 35,31L 23.8461,54L 28,54 Z</Geometry>
+
+    <SolidColorBrush x:Key="Samples.QuickStartButton.Icon.Brush" Color="#FFBF7500" />
+
+    <DataTemplate x:Key="Samples.Content.Template" DataType="{x:Type viewModels1:IProgramViewModel}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Ribbon Grid.Row="0">
+                <Ribbon.ApplicationMenu>
+                    <RibbonApplicationMenu Visibility="Collapsed" />
+                </Ribbon.ApplicationMenu>
+            </Ribbon>
+            <pdock:DockingManager Grid.Row="1">
+            </pdock:DockingManager>
+        </Grid>
+    </DataTemplate>
+
+    <Style x:Key="Samples.Window.Style" TargetType="pwin:AppWindow">
+        <Setter Property="Title" Value="{DynamicResource Samples.Window.Title}" />
+        <Setter Property="Width" Value="1200" />
+        <Setter Property="Height" Value="800" />
+        <Setter Property="WindowState" Value="Normal" />
+        <Setter Property="ContentTemplate" Value="{StaticResource Samples.Content.Template}" />
+    </Style>
+
+</ResourceDictionary>

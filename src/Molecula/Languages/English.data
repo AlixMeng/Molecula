@@ -7,3 +7,37 @@ Login.Login.Button=Login
 Login.Cancel.Button=Cancel
 
 MainMenu.Window.Title=Molecula - Main Menu
+MainMenu.ProgramSelection.Caption=Programs
+MainMenu.ProgramSelection.Search.Label=Search
+MainMenu.ProgramQuickStart.Caption=Quick Start
+MainMenu.Overview.Caption=Overview
+
+Orders.Window.Title=Molecula - Orders
+Orders.QuickStartButton.Text=Orders
+Orders.OrderSelection.Caption=Orders Selection
+Orders.OrderSelection.Search.Label=Search:
+Orders.Overview.Caption=Overview
+Orders.OrderNo.Label=Order No.:
+Orders.OrderTitle.Label=Order Title:
+Orders.OrderStatus.Label=Status:
+Orders.Customer.Caption=Customer
+Orders.CustomerNo.Label=Customer No.:
+Orders.CustomerTitle.Label=Title:
+Orders.CustomerFirstName.Label=First Name:
+Orders.CustomerLastName.Label=Last Name:
+Orders.CustomerOrganization.Label=Organization:
+Orders.CustomerDepartment.Label=Department:
+Orders.CustomerStreet.Label=Street:
+Orders.CustomerZip.Label=ZIP:
+Orders.CustomerCity.Label=City:
+Orders.CustomerCountry.Label=Country:
+Orders.OrderDescription.Caption=Description
+
+Samples.Window.Title=Molecula - Samples
+Samples.QuickStartButton.Text=Samples
+
+ResultsBySample.Window.Title=Molecula - Results by sample
+ResultsBySample.QuickStartButton.Text=Results by sample
+
+ResultsByMethod.Window.Title=Molecula - Results by method
+ResultsByMethod.QuickStartButton.Text=Results by method

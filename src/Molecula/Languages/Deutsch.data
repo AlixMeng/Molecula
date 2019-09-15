@@ -7,3 +7,37 @@ Login.Login.Button=Anmelden
 Login.Cancel.Button=Abbrechen
 
 MainMenu.Window.Title=Molecula - Hauptmenü
+MainMenu.ProgramSelection.Caption=Programme
+MainMenu.ProgramSelection.Search.Label=Suche:
+MainMenu.ProgramQuickStart.Caption=Schnellstart
+MainMenu.Overview.Caption=Übersicht
+
+Orders.Window.Title=Molecula - Aufträge
+Orders.QuickStartButton.Text=Aufträge
+Orders.OrderSelection.Caption=Auftragsauswahl
+Orders.OrderSelection.Search.Label=Suche:
+Orders.Overview.Caption=Auftragsübersicht
+Orders.OrderNo.Label=Auftrags-Nr.:
+Orders.OrderTitle.Label=Bezeichnung:
+Orders.OrderStatus.Label=Status:
+Orders.Customer.Caption=Kunde
+Orders.CustomerNo.Label=Kunde-Nr.:
+Orders.CustomerTitle.Label=Anrede:
+Orders.CustomerFirstName.Label=Vorname:
+Orders.CustomerLastName.Label=Nachname:
+Orders.CustomerOrganization.Label=Organisation:
+Orders.CustomerDepartment.Label=Abteilung:
+Orders.CustomerStreet.Label=Straße:
+Orders.CustomerZip.Label=PLZ:
+Orders.CustomerCity.Label=Stadt:
+Orders.CustomerCountry.Label=Land:
+Orders.OrderDescription.Caption=Auftragsbeschreibung
+
+Samples.Window.Title=Molecula - Proben
+Samples.QuickStartButton.Text=Proben
+
+ResultsBySample.Window.Title=Molecula - Ergebnisse nach Proben
+ResultsBySample.QuickStartButton.Text=Ergebnisse nach Proben
+
+ResultsByMethod.Window.Title=Molecula - Ergebnisse nach Methoden
+ResultsByMethod.QuickStartButton.Text=Ergebnisse nach Methoden
