@@ -52,13 +52,25 @@ namespace Molecula.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("TEST")]
+        [global::System.Configuration.DefaultSettingValueAttribute("MOLTEST")]
         public string LastSelectedSystem {
             get {
                 return ((string)(this["LastSelectedSystem"]));
             }
             set {
                 this["LastSelectedSystem"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("English")]
+        public string LastSelectedLanguage {
+            get {
+                return ((string)(this["LastSelectedLanguage"]));
+            }
+            set {
+                this["LastSelectedLanguage"] = value;
             }
         }
     }

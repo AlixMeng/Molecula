@@ -25,7 +25,20 @@ namespace Molecula.ViewModels
             {
                 if (Set(ref _system, value))
                 {
-                    UpdateSystem(_system);
+                    Settings.Default.LastSelectedSystem = _system;
+                }
+            }
+        }
+
+        private string _language;
+        public string Language
+        {
+            get => _language;
+            set
+            {
+                if (Set(ref _language, value))
+                {
+                    Settings.Default.LastSelectedLanguage = _language;
                 }
             }
         }
@@ -60,6 +73,7 @@ namespace Molecula.ViewModels
             _commandFactory = commandFactory;
             _windowManager = windowManager;
             System = Settings.Default.LastSelectedSystem;
+            Language = Settings.Default.LastSelectedLanguage;
         }
 
         private static IEnumerable<string> FillAvailableSystems()
@@ -71,12 +85,6 @@ namespace Molecula.ViewModels
                 .Where(value => !string.IsNullOrWhiteSpace(value))
                 .ToList();
 
-        private void UpdateSystem(string system)
-        {
-            Settings.Default.LastSelectedSystem = system;
-            Settings.Default.Save();
-        }
-
         private bool CanLogin(object arg)
         {
             return !string.IsNullOrWhiteSpace(System)
@@ -86,6 +94,7 @@ namespace Molecula.ViewModels
 
         private void Login(object obj)
         {
+            Settings.Default.Save();
             _windowManager.CloseDialog(this, true);
         }
 

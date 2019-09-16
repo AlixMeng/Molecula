@@ -14,5 +14,8 @@
     <Setting Name="LastSelectedSystem" Type="System.String" Scope="User">
       <Value Profile="(Default)">MOLTEST</Value>
     </Setting>
+    <Setting Name="LastSelectedLanguage" Type="System.String" Scope="User">
+      <Value Profile="(Default)">English</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

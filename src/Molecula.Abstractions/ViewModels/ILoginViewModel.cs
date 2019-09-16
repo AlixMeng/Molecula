@@ -8,6 +8,8 @@ namespace Molecula.Abstractions.ViewModels
     {
         string System { get; set; }
 
+        string Language { get; set; }
+
         IEnumerable<string> AvailableSystems { get; }
 
         string User { get; set; }
