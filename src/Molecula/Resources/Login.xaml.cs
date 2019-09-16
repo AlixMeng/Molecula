@@ -2,7 +2,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Molecula.Abstractions.ViewModels;
-using Molecula.ViewModels;
 
 namespace Molecula.Resources
 {

@@ -80,7 +80,7 @@
                             ItemHeight="40*">
                             <ItemsControl ItemsSource="{Binding QuickStartPrograms}">
                                 <ItemsControl.ItemTemplateSelector>
-                                    <programs:QuickStartTemplateSelector />
+                                    <programs:ProgramQuickStartTemplateSelector />
                                 </ItemsControl.ItemTemplateSelector>
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>

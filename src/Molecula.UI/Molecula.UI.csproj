@@ -62,7 +62,7 @@
   <ItemGroup>
     <Compile Include="Extensions\LanguageManager.cs" />
     <Compile Include="Programs\ProgramManager.cs" />
-    <Compile Include="Programs\QuickStartTemplateSelector.cs" />
+    <Compile Include="Programs\ProgramQuickStartTemplateSelector.cs" />
     <Compile Include="Windows\WindowManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

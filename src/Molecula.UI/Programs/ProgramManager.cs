@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using System.Windows.Markup;
 using Molecula.Abstractions.Dtos;
 using Molecula.Abstractions.Services;
 using Pamucuk.Mvvm.ViewModels;
@@ -53,7 +52,7 @@ namespace Molecula.UI.Programs
 
         private void EnsureProgramResources(string program)
         {
-            var resourcePath = Path.Combine(Path.GetDirectoryName(typeof(ProgramManager).Assembly.Location), "Programs", $"{program}.xaml");
+            var resourcePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Programs", $"{program}.xaml");
             if (!File.Exists(resourcePath))
                 return;
 

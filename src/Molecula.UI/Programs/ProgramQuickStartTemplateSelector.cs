@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.IO;
+﻿using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -8,7 +7,7 @@ using Molecula.Abstractions.Dtos;
 
 namespace Molecula.UI.Programs
 {
-    public class QuickStartTemplateSelector : DataTemplateSelector
+    public class ProgramQuickStartTemplateSelector : DataTemplateSelector
     {
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {

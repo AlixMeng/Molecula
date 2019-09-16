@@ -42,7 +42,7 @@ namespace Molecula.UI.Extensions
 
         private static Dictionary<string, string> LoadLanguage(string language)
         {
-            var filePath = Path.Combine(Path.GetDirectoryName(typeof(LanguageManager).Assembly.Location), LanguageSubfolder,
+            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, LanguageSubfolder,
                 $"{language}{LanguageExtension}");
             var lines = File.ReadAllLines(filePath);
             var data = lines

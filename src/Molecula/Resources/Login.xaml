@@ -5,8 +5,7 @@
     xmlns:extensions="clr-namespace:Molecula.UI.Extensions;assembly=Molecula.UI"
     xmlns:play="http://schemas.pamucuk.com/pamucuk/2019/layout/xaml"
     xmlns:pwin="http://schemas.pamucuk.com/pamucuk/2019/windows/xaml"
-    xmlns:viewModels="clr-namespace:Molecula.Abstractions.ViewModels;assembly=Molecula.Abstractions"
-    xmlns:viewModels1="clr-namespace:Molecula.ViewModels">
+    xmlns:viewModels="clr-namespace:Molecula.Abstractions.ViewModels;assembly=Molecula.Abstractions">
 
     <DataTemplate x:Key="Login.Content.Template" DataType="{x:Type viewModels:ILoginViewModel}">
         <Border
