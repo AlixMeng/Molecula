@@ -35,8 +35,8 @@
     <Reference Include="Pamucuk.Mvvm, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Pamucuk.Mvvm.2.4.0\lib\net48\Pamucuk.Mvvm.dll</HintPath>
     </Reference>
-    <Reference Include="Pamucuk.UI, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Pamucuk.UI.2.4.0\lib\net48\Pamucuk.UI.dll</HintPath>
+    <Reference Include="Pamucuk.UI, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Pamucuk.UI.2.5.0\lib\net48\Pamucuk.UI.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -60,6 +60,8 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\FocusExtension.cs" />
+    <Compile Include="Extensions\FocusTraversalExtension.cs" />
     <Compile Include="Extensions\LanguageManager.cs" />
     <Compile Include="Programs\ProgramManager.cs" />
     <Compile Include="Programs\ProgramQuickStartTemplateSelector.cs" />
@@ -93,6 +95,9 @@
       <Project>{a63fd3fe-1afa-42f7-956a-5dd80a0bd4de}</Project>
       <Name>Molecula.Abstractions</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Focus\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

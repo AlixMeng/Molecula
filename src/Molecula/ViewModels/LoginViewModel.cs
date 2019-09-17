@@ -17,6 +17,17 @@ namespace Molecula.ViewModels
 
         public string ViewModelId => "Login";
 
+        private string _currentFocusId;
+        public string CurrentFocusId
+        {
+            get => _currentFocusId;
+            set
+            {
+                Set(ref _currentFocusId, null);
+                Set(ref _currentFocusId, value);
+            }
+        }
+
         private string _system;
         public string System
         {
@@ -74,6 +85,7 @@ namespace Molecula.ViewModels
             _windowManager = windowManager;
             System = Settings.Default.LastSelectedSystem;
             Language = Settings.Default.LastSelectedLanguage;
+            CurrentFocusId = nameof(User);
         }
 
         private static IEnumerable<string> FillAvailableSystems()

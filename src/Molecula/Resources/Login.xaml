@@ -10,20 +10,28 @@
     <DataTemplate x:Key="Login.Content.Template" DataType="{x:Type viewModels:ILoginViewModel}">
         <Border
             Margin="5"
+            extensions:FocusExtension.CurrentFocusId="{Binding CurrentFocusId}"
             BorderBrush="Black"
             BorderThickness="1">
             <play:ItemGroup Margin="5" Orientation="Vertical">
                 <play:LabelItem Label="{DynamicResource Login.System.Label}">
-                    <ComboBox ItemsSource="{Binding AvailableSystems}" SelectedItem="{Binding System}" />
+                    <ComboBox
+                        extensions:FocusExtension.FocusId="System"
+                        ItemsSource="{Binding AvailableSystems}"
+                        SelectedItem="{Binding System}" />
                 </play:LabelItem>
                 <play:LabelItem Label="{DynamicResource Login.User.Label}">
-                    <TextBox Text="{Binding User}" />
+                    <TextBox extensions:FocusExtension.FocusId="User" Text="{Binding User}" />
                 </play:LabelItem>
                 <play:LabelItem Label="{DynamicResource Login.Password.Label}">
-                    <PasswordBox PasswordChanged="OnPasswordChanged" PreviewKeyUp="OnPasswordPreviewKeyUp" />
+                    <PasswordBox
+                        extensions:FocusExtension.FocusId="Password"
+                        PasswordChanged="OnPasswordChanged"
+                        PreviewKeyUp="OnPasswordPreviewKeyUp" />
                 </play:LabelItem>
                 <play:LabelItem Label="{DynamicResource Login.Language.Label}">
                     <ComboBox
+                        extensions:FocusExtension.FocusId="Language"
                         extensions:LanguageManager.CurrentLanguage="{Binding SelectedItem, RelativeSource={RelativeSource Self}}"
                         ItemsSource="{x:Static extensions:LanguageManager.AvailableLanguages}"
                         SelectedItem="{Binding Language}" />
@@ -31,10 +39,12 @@
                 <play:ItemGroup Margin="0,5,0,0" Orientation="Horizontal">
                     <Button
                         Margin="0,0,2,0"
+                        extensions:FocusExtension.FocusId="Login"
                         Command="{Binding LoginCommand}"
                         Content="{DynamicResource Login.Login.Button}" />
                     <Button
                         Margin="2,0,0,0"
+                        extensions:FocusExtension.FocusId="Cancel"
                         Command="{Binding CancelLoginCommand}"
                         Content="{DynamicResource Login.Cancel.Button}" />
                 </play:ItemGroup>

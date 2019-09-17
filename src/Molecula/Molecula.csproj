@@ -38,8 +38,8 @@
     <Reference Include="Pamucuk.Mvvm, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Pamucuk.Mvvm.2.4.0\lib\net48\Pamucuk.Mvvm.dll</HintPath>
     </Reference>
-    <Reference Include="Pamucuk.UI, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Pamucuk.UI.2.4.0\lib\net48\Pamucuk.UI.dll</HintPath>
+    <Reference Include="Pamucuk.UI, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Pamucuk.UI.2.5.0\lib\net48\Pamucuk.UI.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

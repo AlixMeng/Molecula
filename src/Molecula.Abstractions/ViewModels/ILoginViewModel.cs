@@ -6,6 +6,8 @@ namespace Molecula.Abstractions.ViewModels
 {
     public interface ILoginViewModel : IViewModelBase
     {
+        string CurrentFocusId { get; set; }
+
         string System { get; set; }
 
         string Language { get; set; }
