@@ -2,10 +2,8 @@
 {
     public class ProgramSetting
     {
-        public string ProgramId { get; set; }
+        public string Id { get; set; }
 
-        public string ProgramCategory { get; set; }
-
-        public bool IsInQuickStart { get; set; }
+        public string Menu { get; set; }
     }
 }

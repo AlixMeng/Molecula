@@ -1,0 +1,27 @@
+﻿
+- Id: Orders
+  Menu: Lifecycle
+
+- Id: Samples
+  Menu: Lifecycle
+
+- Id: ResultsBySample
+  Menu: Lifecycle
+
+- Id: ResultsByMethod
+  Menu: Lifecycle
+
+- Id: Approval
+  Menu: Lifecycle
+
+- Id: Addresses
+  Menu: StaticData
+
+- Id: Sampletypes
+  Menu: StaticData
+
+- Id: Methods
+  Menu: StaticData
+
+- Id: Lookups
+  Menu: StaticData/Configuration

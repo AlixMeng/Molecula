@@ -41,3 +41,18 @@ ResultsBySample.QuickStartButton.Text=Results by sample
 
 ResultsByMethod.Window.Title=Molecula - Results by method
 ResultsByMethod.QuickStartButton.Text=Results by method
+
+Approval.Window.Title=Molecula - Approval
+Approval.QuickStartButton.Text=Approval
+
+Addresses.Window.Title=Molecula - Addresses
+Addresses.QuickStartButton.Text=Addresses
+
+Sampletypes.Window.Title=Molecula - Sampletypes
+Sampletypes.QuickStartButton.Text=Sampletypes
+
+Methods.Window.Title=Molecula - Methods
+Methods.QuickStartButton.Text=Methods
+
+Lookups.Window.Title=Molecula - Lookups
+Lookups.QuickStartButton.Text=Lookups

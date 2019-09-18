@@ -6,6 +6,7 @@ using System.Windows;
 using Molecula.Abstractions.Dtos;
 using Molecula.Abstractions.Services;
 using Pamucuk.Mvvm.ViewModels;
+using YamlDotNet.Serialization;
 
 namespace Molecula.UI.Programs
 {
@@ -13,7 +14,8 @@ namespace Molecula.UI.Programs
     {
         private readonly Func<string, IViewModelBase> _createProgramViewModel;
         private readonly IWindowManager _windowManager;
-        private readonly List<ProgramSetting> _availablePrograms;
+        private IEnumerable<ProgramSetting> _availablePrograms;
+        private const string ProgramTemplateName = "ProgramTemplate";
 
         public ProgramManager(
             Func<Func<string, IViewModelBase>> getProgramViewModelFactory,
@@ -21,26 +23,32 @@ namespace Molecula.UI.Programs
         {
             _createProgramViewModel = getProgramViewModelFactory();
             _windowManager = windowManager;
-            _availablePrograms = new List<ProgramSetting>
-            {
-                new ProgramSetting{ProgramCategory = "Orders", ProgramId = "Orders", IsInQuickStart = true},
-                new ProgramSetting{ProgramCategory = "Samples", ProgramId = "Samples", IsInQuickStart = true},
-                new ProgramSetting{ProgramCategory = "Results", ProgramId = "ResultsBySample", IsInQuickStart = true},
-                new ProgramSetting{ProgramCategory = "Results", ProgramId = "ResultsByMethod", IsInQuickStart = true},
-            };
         }
 
         public IEnumerable<ProgramSetting> GetAvailablePrograms()
         {
-            return _availablePrograms;
+            return _availablePrograms ?? (_availablePrograms = LoadPrograms());
+        }
+
+        private IEnumerable<ProgramSetting> LoadPrograms()
+        {
+            var programsContent = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Programs.yaml"));
+            var deserializer = new DeserializerBuilder().Build();
+            var programs = deserializer.Deserialize<ProgramSetting[]>(programsContent);
+            return programs;
         }
 
         public IEnumerable<ProgramSetting> GetQuickStartPrograms()
         {
-            var quickstartPrograms = _availablePrograms.Where(setting => setting.IsInQuickStart).ToArray();
+            var quickstartPrograms = GetAvailablePrograms().Where(IsInQuickstart).ToArray();
             foreach(var program in quickstartPrograms)
-                EnsureProgramResources(program.ProgramId);
+                EnsureProgramResources(program.Id);
             return quickstartPrograms;
+        }
+
+        private bool IsInQuickstart(ProgramSetting program)
+        {
+            return true;
         }
 
         public void StartProgram(string program)
@@ -52,9 +60,11 @@ namespace Molecula.UI.Programs
 
         private void EnsureProgramResources(string program)
         {
-            var resourcePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Programs", $"{program}.xaml");
-            if (!File.Exists(resourcePath))
-                return;
+            var resourcePath = GetProgramPath(program);
+            if (!ExistsProgram(resourcePath))
+            {
+                CreateProgramFromTemplate(program, resourcePath);
+            }
 
             var programUri = new Uri($"file:///{resourcePath}");
             if (IsProgramResourceLoaded(programUri))
@@ -63,6 +73,19 @@ namespace Molecula.UI.Programs
             var resourceDictionary = new ResourceDictionary {Source = programUri };
             Application.Current.Resources.MergedDictionaries.Add(resourceDictionary);
         }
+
+        private void CreateProgramFromTemplate(string program, string resourcePath)
+        {
+            var templatePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", $"{ProgramTemplateName}.xaml");
+            var content = File.ReadAllText(templatePath).Replace($"${ProgramTemplateName}$", program);
+            File.WriteAllText(resourcePath, content);
+        }
+
+        private bool ExistsProgram(string resourcePath)
+            => File.Exists(resourcePath);
+
+        private string GetProgramPath(string program)
+            => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Programs", $"{program}.xaml");
 
         private bool IsProgramResourceLoaded(Uri programUri)
             => Application.Current.Resources.MergedDictionaries.Any(dictionary => programUri.Equals(dictionary.Source));

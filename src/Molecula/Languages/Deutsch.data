@@ -41,3 +41,18 @@ ResultsBySample.QuickStartButton.Text=Ergebnisse nach Proben
 
 ResultsByMethod.Window.Title=Molecula - Ergebnisse nach Methoden
 ResultsByMethod.QuickStartButton.Text=Ergebnisse nach Methoden
+
+Approval.Window.Title=Molecula - Freigabe
+Approval.QuickStartButton.Text=Freigabe
+
+Addresses.Window.Title=Molecula - Adressen
+Addresses.QuickStartButton.Text=Adressen
+
+Sampletypes.Window.Title=Molecula - Prüfpläne
+Sampletypes.QuickStartButton.Text=Prüfpläne
+
+Methods.Window.Title=Molecula - Methoden
+Methods.QuickStartButton.Text=Methoden
+
+Lookups.Window.Title=Molecula - Auswahl
+Lookups.QuickStartButton.Text=Auswahl

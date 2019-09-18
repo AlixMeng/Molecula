@@ -78,16 +78,20 @@
                             CanScrollContent="False"
                             Caption="{DynamicResource MainMenu.ProgramQuickStart.Caption}"
                             ItemHeight="40*">
-                            <ItemsControl ItemsSource="{Binding QuickStartPrograms}">
-                                <ItemsControl.ItemTemplateSelector>
-                                    <programs:ProgramQuickStartTemplateSelector />
-                                </ItemsControl.ItemTemplateSelector>
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <WrapPanel Grid.IsSharedSizeScope="True" />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                            </ItemsControl>
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.IsSharedSizeScope="True" HorizontalScrollBarVisibility="Disabled">
+                                <ItemsControl ItemsSource="{Binding QuickStartPrograms}">
+                                    <ItemsControl.ItemTemplateSelector>
+                                        <programs:ProgramQuickStartTemplateSelector />
+                                    </ItemsControl.ItemTemplateSelector>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel>
+                                                <!-- Any number of components here -->
+                                            </WrapPanel>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ItemsControl>
+                            </ScrollViewer>
                         </pdock:DockingPanel>
                         <pdock:DockingPanel Caption="{DynamicResource MainMenu.Overview.Caption}" ItemHeight="60*">
                             <WrapPanel />

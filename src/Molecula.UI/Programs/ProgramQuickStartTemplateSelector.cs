@@ -20,8 +20,8 @@ namespace Molecula.UI.Programs
             {
                 XamlWriter.Save(baseTemplate, writer);
             }
-            builder.Replace("=\"{DynamicResource QuickStartButton.", "=\"{DynamicResource " + setting.ProgramId + ".QuickStartButton.");
-            builder.Replace("<Button ", "<Button Command=\"{Binding DataContext.StartProgramCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}\" CommandParameter=\"" + setting.ProgramId + "\" ");
+            builder.Replace("=\"{DynamicResource QuickStartButton.", "=\"{DynamicResource " + setting.Id + ".QuickStartButton.");
+            builder.Replace("<Button ", "<Button Command=\"{Binding DataContext.StartProgramCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}\" CommandParameter=\"" + setting.Id + "\" ");
 
             var context = new ParserContext {XamlTypeMapper = new XamlTypeMapper(new string[0])};
             var template = (DataTemplate)XamlReader.Parse(builder.ToString(), context);
