@@ -72,7 +72,10 @@ namespace Molecula.ViewModels
         }
 
         private ICommand _loginCommand;
-        public ICommand LoginCommand => _loginCommand ?? (_loginCommand = _commandFactory.Create<object>(Login, CanLogin));
+        public ICommand LoginCommand => _loginCommand ?? (_loginCommand = _commandFactory.Create<bool?>(Login, CanLogin));
+
+        private ICommand _setPasswordCommand;
+        public ICommand SetPasswordCommand => _setPasswordCommand ?? (_setPasswordCommand = _commandFactory.Create<string>(SetPassword));
 
         private ICommand _cancelLoginCommand;
         public ICommand CancelLoginCommand => _cancelLoginCommand ?? (_cancelLoginCommand = _commandFactory.Create<object>(CancelLogin));
@@ -97,14 +100,15 @@ namespace Molecula.ViewModels
                 .Where(value => !string.IsNullOrWhiteSpace(value))
                 .ToList();
 
-        private bool CanLogin(object arg)
+        private bool CanLogin(bool? parameter)
         {
             return !string.IsNullOrWhiteSpace(System)
                    && !string.IsNullOrWhiteSpace(User)
-                   && !string.IsNullOrWhiteSpace(Password);
+                   && !string.IsNullOrWhiteSpace(Password)
+                   && parameter == true;
         }
 
-        private void Login(object obj)
+        private void Login(bool? parameter)
         {
             Settings.Default.Save();
             _windowManager.CloseDialog(this, true);
@@ -114,5 +118,11 @@ namespace Molecula.ViewModels
         {
             _windowManager.CloseDialog(this, false);
         }
+
+        private void SetPassword(string password)
+        {
+            Password = password;
+        }
+
     }
 }

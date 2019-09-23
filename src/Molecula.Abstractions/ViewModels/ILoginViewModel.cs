@@ -20,6 +20,8 @@ namespace Molecula.Abstractions.ViewModels
 
         ICommand LoginCommand { get; }
 
+        ICommand SetPasswordCommand { get; }
+
         ICommand CancelLoginCommand { get; }
     }
 }

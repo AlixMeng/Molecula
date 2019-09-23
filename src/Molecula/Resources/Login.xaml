@@ -2,10 +2,16 @@
     x:Class="Molecula.Resources.Login"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="clr-namespace:Molecula.Converter"
     xmlns:extensions="clr-namespace:Molecula.UI.Extensions;assembly=Molecula.UI"
     xmlns:play="http://schemas.pamucuk.com/pamucuk/2019/layout/xaml"
+    xmlns:pmvvm="http://schemas.pamucuk.com/pamucuk/2019/mvvm/xaml"
     xmlns:pwin="http://schemas.pamucuk.com/pamucuk/2019/windows/xaml"
     xmlns:viewModels="clr-namespace:Molecula.Abstractions.ViewModels;assembly=Molecula.Abstractions">
+
+    <converter:IsKeyConverter x:Key="IsKeyConverter" />
+
+    <converter:PasswordChangedConverter x:Key="PasswordChangedConverter" />
 
     <DataTemplate x:Key="Login.Content.Template" DataType="{x:Type viewModels:ILoginViewModel}">
         <Border
@@ -26,8 +32,11 @@
                 <play:LabelItem Label="{DynamicResource Login.Password.Label}">
                     <PasswordBox
                         extensions:FocusExtension.FocusId="Password"
-                        PasswordChanged="OnPasswordChanged"
-                        PreviewKeyUp="OnPasswordPreviewKeyUp" />
+                        KeyUp="{pmvvm:EventToCommand DataContext.LoginCommand,
+                                                     EventArgsConverter={StaticResource IsKeyConverter},
+                                                     EventArgsConverterParameter={x:Static Key.Enter}}"
+                        PasswordChanged="{pmvvm:EventToCommand DataContext.SetPasswordCommand,
+                                                               EventArgsConverter={StaticResource PasswordChangedConverter}}" />
                 </play:LabelItem>
                 <play:LabelItem Label="{DynamicResource Login.Language.Label}">
                     <ComboBox

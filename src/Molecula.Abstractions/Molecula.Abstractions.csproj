@@ -31,8 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Pamucuk.Mvvm, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Pamucuk.Mvvm.2.4.0\lib\net48\Pamucuk.Mvvm.dll</HintPath>
+    <Reference Include="Pamucuk.Mvvm, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Pamucuk.Mvvm.3.0.1\lib\net48\Pamucuk.Mvvm.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
