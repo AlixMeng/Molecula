@@ -10,6 +10,12 @@
 
     <SolidColorBrush x:Key="ResultsByMethod.QuickStartButton.Icon.Brush" Color="DarkGreen" />
 
+    <DrawingImage x:Key="ResultsByMethod.Window.Icon">
+        <DrawingImage.Drawing>
+            <GeometryDrawing Brush="{StaticResource ResultsByMethod.QuickStartButton.Icon.Brush}" Geometry="{StaticResource ResultsByMethod.QuickStartButton.Icon.Geometry}" />
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
     <DataTemplate x:Key="ResultsByMethod.Content.Template" DataType="{x:Type viewModels1:IProgramViewModel}">
         <Grid>
             <Grid.RowDefinitions>
@@ -32,6 +38,7 @@
         <Setter Property="Height" Value="800" />
         <Setter Property="WindowState" Value="Normal" />
         <Setter Property="ContentTemplate" Value="{StaticResource ResultsByMethod.Content.Template}" />
+        <Setter Property="Icon" Value="{StaticResource ResultsByMethod.Window.Icon}" />
     </Style>
 
 </ResourceDictionary>

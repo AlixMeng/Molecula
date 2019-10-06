@@ -9,6 +9,12 @@
 
     <SolidColorBrush x:Key="$ProgramTemplate$.QuickStartButton.Icon.Brush" Color="#FFBF7500" />
 
+    <DrawingImage x:Key="$ProgramTemplate$.Window.Icon">
+        <DrawingImage.Drawing>
+            <GeometryDrawing Brush="{StaticResource $ProgramTemplate$.QuickStartButton.Icon.Brush}" Geometry="{StaticResource $ProgramTemplate$.QuickStartButton.Icon.Geometry}" />
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
     <DataTemplate x:Key="$ProgramTemplate$.Content.Template" DataType="{x:Type viewModels1:IProgramViewModel}">
         <Grid>
             <Grid.RowDefinitions>
@@ -31,6 +37,7 @@
         <Setter Property="Height" Value="800" />
         <Setter Property="WindowState" Value="Normal" />
         <Setter Property="ContentTemplate" Value="{StaticResource $ProgramTemplate$.Content.Template}" />
+        <Setter Property="Icon" Value="{StaticResource $ProgramTemplate$.Window.Icon}" />
     </Style>
 
 </ResourceDictionary>

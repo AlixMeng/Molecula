@@ -10,6 +10,12 @@
 
     <SolidColorBrush x:Key="Orders.QuickStartButton.Icon.Brush" Color="DarkRed" />
 
+    <DrawingImage x:Key="Orders.Window.Icon">
+        <DrawingImage.Drawing>
+            <GeometryDrawing Brush="{StaticResource Orders.QuickStartButton.Icon.Brush}" Geometry="{StaticResource Orders.QuickStartButton.Icon.Geometry}" />
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
     <DataTemplate x:Key="Orders.Content.Template" DataType="{x:Type viewModels1:IProgramViewModel}">
         <Grid>
             <Grid.RowDefinitions>
@@ -122,6 +128,7 @@
         <Setter Property="Height" Value="800" />
         <Setter Property="WindowState" Value="Normal" />
         <Setter Property="ContentTemplate" Value="{StaticResource Orders.Content.Template}" />
+        <Setter Property="Icon" Value="{StaticResource Orders.Window.Icon}" />
     </Style>
 
 </ResourceDictionary>
