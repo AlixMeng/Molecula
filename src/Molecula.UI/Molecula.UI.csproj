@@ -16,8 +16,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Pamucuk.Mvvm" Version="4.0.0" />
-    <PackageReference Include="Pamucuk.UI" Version="4.0.0" />
+    <PackageReference Include="Pamucuk.Mvvm" Version="4.1.0" />
+    <PackageReference Include="Pamucuk.UI" Version="4.1.0" />
     <PackageReference Include="YamlDotNet" Version="7.0.0" />
   </ItemGroup>
 

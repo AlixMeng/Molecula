@@ -17,7 +17,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Pamucuk.Mvvm" Version="4.0.0" />
+    <PackageReference Include="Pamucuk.Mvvm" Version="4.1.0" />
   </ItemGroup>
 
   <ItemGroup>
