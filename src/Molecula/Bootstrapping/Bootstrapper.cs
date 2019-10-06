@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using Molecula.Abstractions;
 using Molecula.Abstractions.Services;
 using Molecula.Abstractions.ViewModels;
 using Molecula.UI.Programs;
@@ -41,7 +42,7 @@ namespace Molecula.Bootstrapping
         {
             _ioc.Register<LoginViewModel, ILoginViewModel>();
             _ioc.Register<MainMenuViewModel, IMainMenuViewModel>();
-            _ioc.Register<Func<string, IViewModelBase>>(
+            _ioc.Register<CreateProgramViewModel>(
                 () =>
                     programId =>
                     {

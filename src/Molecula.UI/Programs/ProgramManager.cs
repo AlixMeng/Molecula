@@ -3,34 +3,34 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using Molecula.Abstractions;
 using Molecula.Abstractions.Dtos;
 using Molecula.Abstractions.Services;
-using Pamucuk.Mvvm.ViewModels;
 using YamlDotNet.Serialization;
 
 namespace Molecula.UI.Programs
 {
     public class ProgramManager : IProgramManager
     {
-        private readonly Func<string, IViewModelBase> _createProgramViewModel;
+        private readonly CreateProgramViewModel _createProgramViewModel;
         private readonly IWindowManager _windowManager;
         private IEnumerable<ProgramSetting> _availablePrograms;
         private const string ProgramTemplateName = "ProgramTemplate";
 
         public ProgramManager(
-            Func<Func<string, IViewModelBase>> getProgramViewModelFactory,
+            Func<CreateProgramViewModel> getCreateProgramViewModelFactory,
             IWindowManager windowManager)
         {
-            _createProgramViewModel = getProgramViewModelFactory();
+            _createProgramViewModel = getCreateProgramViewModelFactory();
             _windowManager = windowManager;
         }
 
         public IEnumerable<ProgramSetting> GetAvailablePrograms()
         {
-            return _availablePrograms ?? (_availablePrograms = LoadPrograms());
+            return _availablePrograms ??= LoadPrograms();
         }
 
-        private IEnumerable<ProgramSetting> LoadPrograms()
+        private static IEnumerable<ProgramSetting> LoadPrograms()
         {
             var programsContent = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Programs.yaml"));
             var deserializer = new DeserializerBuilder().Build();
@@ -46,7 +46,7 @@ namespace Molecula.UI.Programs
             return quickstartPrograms;
         }
 
-        private bool IsInQuickstart(ProgramSetting program)
+        private static bool IsInQuickstart(ProgramSetting program)
         {
             return true;
         }
@@ -58,7 +58,7 @@ namespace Molecula.UI.Programs
             _windowManager.OpenWindow(programViewModel);
         }
 
-        private void EnsureProgramResources(string program)
+        private static void EnsureProgramResources(string program)
         {
             var resourcePath = GetProgramPath(program);
             if (!ExistsProgram(resourcePath))
@@ -74,20 +74,20 @@ namespace Molecula.UI.Programs
             Application.Current.Resources.MergedDictionaries.Add(resourceDictionary);
         }
 
-        private void CreateProgramFromTemplate(string program, string resourcePath)
+        private static void CreateProgramFromTemplate(string program, string resourcePath)
         {
             var templatePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", $"{ProgramTemplateName}.xaml");
             var content = File.ReadAllText(templatePath).Replace($"${ProgramTemplateName}$", program);
             File.WriteAllText(resourcePath, content);
         }
 
-        private bool ExistsProgram(string resourcePath)
+        private static bool ExistsProgram(string resourcePath)
             => File.Exists(resourcePath);
 
-        private string GetProgramPath(string program)
+        private static string GetProgramPath(string program)
             => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Programs", $"{program}.xaml");
 
-        private bool IsProgramResourceLoaded(Uri programUri)
+        private static bool IsProgramResourceLoaded(Uri programUri)
             => Application.Current.Resources.MergedDictionaries.Any(dictionary => programUri.Equals(dictionary.Source));
     }
 }
