@@ -17,11 +17,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Pamucuk.Mvvm" Version="4.1.0" />
+    <Folder Include="Properties\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Properties\" />
+    <PackageReference Include="Pamucuk.Mvvm" Version="4.2.0" />
   </ItemGroup>
 
 </Project>
