@@ -1,13 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Input;
-using Pamucuk.Mvvm.ViewModels;
 
 namespace Molecula.Abstractions.ViewModels
 {
-    public interface ILoginViewModel : IViewModelBase
+    public interface ILoginViewModel : IAbstractViewModel
     {
-        string CurrentFocusId { get; set; }
-
         string System { get; set; }
 
         string Language { get; set; }

@@ -4,18 +4,17 @@ using Molecula.Abstractions.Dtos;
 using Molecula.Abstractions.Services;
 using Molecula.Abstractions.ViewModels;
 using Pamucuk.Mvvm.Commands;
-using Pamucuk.Mvvm.Observables;
 
 namespace Molecula.ViewModels
 {
-    public class MainMenuViewModel : ObservableObject, IMainMenuViewModel
+    public class MainMenuViewModel : AbstractViewModel, IMainMenuViewModel
     {
         private readonly ICommandFactory _commandFactory;
         private readonly IProgramManager _programManager;
-        public string ViewModelId => "MainMenu";
+        public override string ViewModelId => "MainMenu";
 
         private ICommand _startProgramCommand;
-        public ICommand StartProgramCommand => _startProgramCommand ?? (_startProgramCommand = _commandFactory.Create<string>(_programManager.StartProgram));
+        public ICommand StartProgramCommand => _startProgramCommand ??= _commandFactory.Create<string>(_programManager.StartProgram);
 
         public IEnumerable<ProgramSetting> AvailablePrograms => _programManager.GetAvailablePrograms();
 

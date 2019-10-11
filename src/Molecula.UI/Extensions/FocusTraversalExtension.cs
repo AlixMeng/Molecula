@@ -13,6 +13,7 @@ namespace Molecula.UI.Extensions
             _registry = new List<(Type Type, Delegate Action)>
             {
                 (typeof(Panel), new Action<Panel>(panel => panel.BringIntoView())),
+                (typeof(TextBox), new Action<TextBox>(textBox => textBox.CaretIndex = textBox.Text.Length)),
             };
         }
 

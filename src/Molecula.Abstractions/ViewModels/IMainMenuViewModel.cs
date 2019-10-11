@@ -5,7 +5,7 @@ using Pamucuk.Mvvm.ViewModels;
 
 namespace Molecula.Abstractions.ViewModels
 {
-    public interface IMainMenuViewModel : IViewModelBase
+    public interface IMainMenuViewModel : IAbstractViewModel
     {
         ICommand StartProgramCommand { get; }
 

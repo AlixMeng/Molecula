@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:extensions="clr-namespace:Molecula.UI.Extensions;assembly=Molecula.UI"
     xmlns:pdock="http://schemas.pamucuk.com/pamucuk/2019/docking/xaml"
     xmlns:play="http://schemas.pamucuk.com/pamucuk/2019/layout/xaml"
     xmlns:pwin="http://schemas.pamucuk.com/pamucuk/2019/windows/xaml"
@@ -27,7 +28,7 @@
                     <RibbonApplicationMenu Visibility="Collapsed" />
                 </Ribbon.ApplicationMenu>
             </Ribbon>
-            <pdock:DockingManager Grid.Row="1">
+            <pdock:DockingManager Grid.Row="1" extensions:FocusExtension.CurrentFocusId="{Binding CurrentFocusId}">
                 <pdock:DockingGroup Orientation="Horizontal">
                     <pdock:DockingPanel Caption="{DynamicResource Orders.OrderSelection.Caption}" ItemWidth="20*">
                         <Grid>
@@ -50,14 +51,14 @@
                                 <play:ItemGroup Orientation="Vertical">
                                     <play:ItemGroup Orientation="Horizontal">
                                         <play:LabelItem Label="{DynamicResource Orders.OrderNo.Label}">
-                                            <TextBox Text="{Binding OrderNo}" />
+                                            <TextBox Text="{Binding Values[OrderNo]}" />
                                         </play:LabelItem>
                                         <play:LabelItem Label="{DynamicResource Orders.OrderStatus.Label}">
-                                            <TextBox IsReadOnly="True" Text="{Binding OrderStatus}" />
+                                            <TextBox IsReadOnly="True" Text="{Binding Values[OrderStatus]}" />
                                         </play:LabelItem>
                                     </play:ItemGroup>
                                     <play:LabelItem Label="{DynamicResource Orders.OrderTitle.Label}">
-                                        <TextBox Text="{Binding OrderTitle}" />
+                                        <TextBox Text="{Binding Values[OrderTitle]}" />
                                     </play:LabelItem>
                                 </play:ItemGroup>
                             </pdock:DockingPanel>
@@ -68,39 +69,39 @@
                                 <play:ItemGroup Orientation="Vertical">
                                     <play:ItemGroup Orientation="Horizontal">
                                         <play:LabelItem Label="{DynamicResource Orders.CustomerNo.Label}">
-                                            <TextBox Text="{Binding CustomerNo}" />
+                                            <TextBox Text="{Binding Values[CustomerNo]}" />
                                         </play:LabelItem>
                                         <play:LabelItem Label="{DynamicResource Orders.CustomerTitle.Label}">
-                                            <TextBox Text="{Binding CustomerTitle}" />
+                                            <TextBox Text="{Binding Values[CustomerTitle]}" />
                                         </play:LabelItem>
                                     </play:ItemGroup>
                                     <play:ItemGroup Orientation="Horizontal">
                                         <play:LabelItem Label="{DynamicResource Orders.CustomerFirstName.Label}">
-                                            <TextBox Text="{Binding CustomerLastName}" />
+                                            <TextBox Text="{Binding Values[CustomerLastName]}" />
                                         </play:LabelItem>
                                         <play:LabelItem Label="{DynamicResource Orders.CustomerLastName.Label}">
-                                            <TextBox Text="{Binding CustomerLastName}" />
+                                            <TextBox Text="{Binding Values[CustomerLastName]}" />
                                         </play:LabelItem>
                                     </play:ItemGroup>
                                     <play:LabelItem Label="{DynamicResource Orders.CustomerOrganization.Label}">
-                                        <TextBox Text="{Binding CustomerOrganization}" />
+                                        <TextBox Text="{Binding Values[CustomerOrganization]}" />
                                     </play:LabelItem>
                                     <play:LabelItem Label="{DynamicResource Orders.CustomerDepartment.Label}">
-                                        <TextBox Text="{Binding CustomerDepartment}" />
+                                        <TextBox Text="{Binding Values[CustomerDepartment]}" />
                                     </play:LabelItem>
                                     <play:LabelItem Label="{DynamicResource Orders.CustomerStreet.Label}">
-                                        <TextBox Text="{Binding CustomerStreet}" />
+                                        <TextBox Text="{Binding Values[CustomerStreet]}" />
                                     </play:LabelItem>
                                     <play:ItemGroup Orientation="Horizontal">
                                         <play:LabelItem Label="{DynamicResource Orders.CustomerZip.Label}">
-                                            <TextBox Text="{Binding CustomerZip}" />
+                                            <TextBox Text="{Binding Values[CustomerZip]}" />
                                         </play:LabelItem>
                                         <play:LabelItem Label="{DynamicResource Orders.CustomerCity.Label}">
-                                            <TextBox Text="{Binding CustomerCity}" />
+                                            <TextBox Text="{Binding Values[CustomerCity]}" />
                                         </play:LabelItem>
                                     </play:ItemGroup>
                                     <play:LabelItem Label="{DynamicResource Orders.CustomerCountry.Label}">
-                                        <TextBox Text="{Binding CustomerCountry}" />
+                                        <TextBox Text="{Binding Values[CustomerCountry]}" />
                                     </play:LabelItem>
                                 </play:ItemGroup>
                             </pdock:DockingPanel>
@@ -112,9 +113,10 @@
                             <TextBox
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch"
+                                extensions:FocusExtension.FocusId="OrderDescription"
                                 AcceptsReturn="True"
                                 AcceptsTab="True"
-                                Text="{Binding OrderDescription}" />
+                                Text="{Binding Values[OrderDescription]}" />
                         </pdock:DockingPanel>
                     </pdock:DockingGroup>
                 </pdock:DockingGroup>

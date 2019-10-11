@@ -6,27 +6,15 @@ using Molecula.Abstractions.Services;
 using Molecula.Abstractions.ViewModels;
 using Molecula.Properties;
 using Pamucuk.Mvvm.Commands;
-using Pamucuk.Mvvm.Observables;
 
 namespace Molecula.ViewModels
 {
-    public class LoginViewModel : ObservableObject, ILoginViewModel
+    public class LoginViewModel : AbstractViewModel, ILoginViewModel
     {
         private readonly ICommandFactory _commandFactory;
         private readonly IWindowManager _windowManager;
 
-        public string ViewModelId => "Login";
-
-        private string _currentFocusId;
-        public string CurrentFocusId
-        {
-            get => _currentFocusId;
-            set
-            {
-                Set(ref _currentFocusId, null);
-                Set(ref _currentFocusId, value);
-            }
-        }
+        public override string ViewModelId => "Login";
 
         private string _system;
         public string System
@@ -55,7 +43,7 @@ namespace Molecula.ViewModels
         }
 
         private IEnumerable<string> _availableSystems;
-        public IEnumerable<string> AvailableSystems => _availableSystems ?? (_availableSystems = FillAvailableSystems());
+        public IEnumerable<string> AvailableSystems => _availableSystems ??= FillAvailableSystems();
 
         private string _user;
         public string User
@@ -72,13 +60,13 @@ namespace Molecula.ViewModels
         }
 
         private ICommand _loginCommand;
-        public ICommand LoginCommand => _loginCommand ?? (_loginCommand = _commandFactory.Create<bool?>(Login, CanLogin));
+        public ICommand LoginCommand => _loginCommand ??= _commandFactory.Create<bool?>(Login, CanLogin);
 
         private ICommand _setPasswordCommand;
-        public ICommand SetPasswordCommand => _setPasswordCommand ?? (_setPasswordCommand = _commandFactory.Create<string>(SetPassword));
+        public ICommand SetPasswordCommand => _setPasswordCommand ??= _commandFactory.Create<string>(SetPassword);
 
         private ICommand _cancelLoginCommand;
-        public ICommand CancelLoginCommand => _cancelLoginCommand ?? (_cancelLoginCommand = _commandFactory.Create<object>(CancelLogin));
+        public ICommand CancelLoginCommand => _cancelLoginCommand ??= _commandFactory.Create<object>(CancelLogin);
 
         public LoginViewModel(
             ICommandFactory commandFactory,
@@ -88,7 +76,7 @@ namespace Molecula.ViewModels
             _windowManager = windowManager;
             System = Settings.Default.LastSelectedSystem;
             Language = Settings.Default.LastSelectedLanguage;
-            CurrentFocusId = nameof(User);
+            SetCurrentFocusId(nameof(User));
         }
 
         private static IEnumerable<string> FillAvailableSystems()
