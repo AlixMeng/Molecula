@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using Molecula.Abstractions;
 using Molecula.Abstractions.Services;
 using Molecula.Abstractions.ViewModels;
@@ -8,7 +7,6 @@ using Molecula.UI.Windows;
 using Molecula.ViewModels;
 using Pamucuk.Mvvm.Commands;
 using Pamucuk.Mvvm.Ioc;
-using Pamucuk.Mvvm.ViewModels;
 using Pamucuk.UI.Controls.Windows;
 
 namespace Molecula.Bootstrapping

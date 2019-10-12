@@ -10,7 +10,7 @@ namespace Molecula.UI.Extensions
     {
         static FocusTraversalExtension()
         {
-            _registry = new List<(Type Type, Delegate Action)>
+            Registry = new List<(Type Type, Delegate Action)>
             {
                 (typeof(Panel), new Action<Panel>(panel => panel.BringIntoView())),
                 (typeof(TextBox), new Action<TextBox>(textBox => textBox.CaretIndex = textBox.Text.Length)),
@@ -19,7 +19,7 @@ namespace Molecula.UI.Extensions
 
         public static Action GetTraversalAction(this DependencyObject element)
         {
-            var actions = _registry
+            var actions = Registry
                 .Where(entry => entry.Type.IsInstanceOfType(element))
                 .ToList();
 
@@ -29,6 +29,6 @@ namespace Molecula.UI.Extensions
             return () => actions.ForEach(entry => entry.Action.DynamicInvoke(element));
         }
 
-        private static readonly List<(Type Type, Delegate Action)> _registry;
+        private static readonly List<(Type Type, Delegate Action)> Registry;
     }
 }

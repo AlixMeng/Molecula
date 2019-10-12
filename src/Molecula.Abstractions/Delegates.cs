@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Pamucuk.Mvvm.ViewModels;
+﻿using Pamucuk.Mvvm.ViewModels;
 
 namespace Molecula.Abstractions
 {

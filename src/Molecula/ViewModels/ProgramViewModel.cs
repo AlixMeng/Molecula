@@ -1,7 +1,4 @@
-﻿using System;
-using System.Windows.Input;
-using Molecula.Abstractions.ViewModels;
-using Pamucuk.Mvvm.Commands;
+﻿using Molecula.Abstractions.ViewModels;
 using Pamucuk.Mvvm.Observables;
 
 namespace Molecula.ViewModels

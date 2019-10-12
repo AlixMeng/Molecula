@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Input;
 using Molecula.Abstractions.Dtos;
-using Pamucuk.Mvvm.ViewModels;
 
 namespace Molecula.Abstractions.ViewModels
 {
