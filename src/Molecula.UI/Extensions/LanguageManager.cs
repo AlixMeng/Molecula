@@ -25,11 +25,11 @@ namespace Molecula.UI.Extensions
             DependencyProperty.RegisterAttached("CurrentLanguage", typeof(string), typeof(LanguageManager),
                 new PropertyMetadata(DefaultLanguage, OnCurrentLanguageChanged));
 
-        public static string GetCurrentLanguage(FrameworkElement element) =>
-            (string) element.GetValue(CurrentLanguageProperty);
+        public static string GetCurrentLanguage(FrameworkElement element) 
+            => (string) element.GetValue(CurrentLanguageProperty);
 
-        public static void SetCurrentLanguage(FrameworkElement element, string value) =>
-            element.SetValue(CurrentLanguageProperty, value);
+        public static void SetCurrentLanguage(FrameworkElement element, string value) 
+            => element.SetValue(CurrentLanguageProperty, value);
 
         private static void OnCurrentLanguageChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
         {
