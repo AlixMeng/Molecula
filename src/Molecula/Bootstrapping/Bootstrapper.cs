@@ -1,12 +1,19 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using Molecula.Abstractions;
 using Molecula.Abstractions.Services;
 using Molecula.Abstractions.ViewModels;
+using Molecula.Abstractions.Workflows.Core;
+using Molecula.Abstractions.Workflows.Nodes;
+using Molecula.Abstractions.Workflows.ViewModels;
 using Molecula.UI.Programs;
 using Molecula.UI.Windows;
 using Molecula.ViewModels;
+using Molecula.Workflows.Designer.Core;
+using Molecula.Workflows.Designer.Nodes;
 using Pamucuk.Mvvm.Commands;
 using Pamucuk.Mvvm.Ioc;
+using Pamucuk.Mvvm.ViewModels;
 using Pamucuk.UI.Controls.Windows;
 
 namespace Molecula.Bootstrapping
@@ -24,19 +31,20 @@ namespace Molecula.Bootstrapping
             RegisterServices();
             RegisterViewModels();
             RegisterViews();
+            RegisterWorkflowDesigner();
 
             Locator = new Locator(_ioc);
             _ioc.Register(() => Locator);
         }
 
-        public void RegisterServices()
+        private void RegisterServices()
         {
             _ioc.Register<RelayCommandFactory, ICommandFactory>();
             _ioc.Register<WindowManager, IWindowManager>();
             _ioc.Register<ProgramManager, IProgramManager>();
         }
 
-        public void RegisterViewModels()
+        private void RegisterViewModels()
         {
             _ioc.Register<LoginViewModel, ILoginViewModel>();
             _ioc.Register<MainMenuViewModel, IMainMenuViewModel>();
@@ -44,12 +52,17 @@ namespace Molecula.Bootstrapping
                 () =>
                     programId =>
                     {
+                        var type = (Application.Current.TryFindResource($"{programId}.Content.Template") as DataTemplate)?.DataType as Type;
+                        if (type != null)
+                        {
+                            return _ioc.GetNewInstance(type) as IViewModelBase;
+                        }
                         var vm = new ProgramViewModel(programId);
                         return vm;
                     });
         }
 
-        public void RegisterViews()
+        private void RegisterViews()
         {
             _ioc.Register<Window>(() =>
             {
@@ -57,6 +70,22 @@ namespace Molecula.Bootstrapping
                 LocatorExtension.SetLocator(window, Locator);
                 return window;
             });
+        }
+
+        private void RegisterWorkflowDesigner()
+        {
+            _ioc.Register<WorkflowDesignerViewModel, IWorkflowDesignerViewModel>();
+            _ioc.Register<Workspace, IWorkspace>();
+            _ioc.Register<NodeLink, INodeLink>();
+            _ioc.Register<AssignNode, IAssignNode>();
+            _ioc.Register<DebugNode, IDebugNode>();
+            _ioc.Register<FlowNode, IFlowNode>();
+            _ioc.Register<FunctionNode, IFunctionNode>();
+            _ioc.Register<ReturnNode, IReturnNode>();
+            _ioc.Register<SnippetNode, ISnippetNode>();
+            _ioc.Register<StartNode, IStartNode>();
+            _ioc.Register<SwitchNode, ISwitchNode>();
+            _ioc.Register<ThrowNode, IThrowNode>();
         }
     }
 }

@@ -1,0 +1,44 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:core="clr-namespace:Molecula.Workflows.Designer.Core"
+                    xmlns:controls="clr-namespace:Molecula.Workflows.Designer.Controls"
+                    xmlns:converter="clr-namespace:Molecula.Workflows.Designer.Converter">
+
+    <ControlTemplate x:Key="NodeLinkPreviewControlTemplate" TargetType="controls:NodeLinkPreviewControl">
+        <Path
+            Panel.ZIndex="3"
+            Stroke="CornflowerBlue"
+            StrokeDashArray="2,1"
+            StrokeThickness="4">
+            <Path.Data>
+                <PathGeometry>
+                    <PathGeometry.Figures>
+                        <MultiBinding Converter="{x:Static converter:NodeLinkContentConverter.Instance}">
+                            <Binding Path="NodeLinkStart.X" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type controls:WorkspaceControl}}" />
+                            <Binding Path="NodeLinkStart.Y" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type controls:WorkspaceControl}}" />
+                            <Binding Path="NodeLinkEnd.X" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type controls:WorkspaceControl}}" />
+                            <Binding Path="NodeLinkEnd.Y" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type controls:WorkspaceControl}}" />
+                        </MultiBinding>
+                    </PathGeometry.Figures>
+                </PathGeometry>
+            </Path.Data>
+        </Path>
+    </ControlTemplate>
+
+    <Style TargetType="controls:NodeLinkPreviewControl">
+        <Setter Property="Template" Value="{StaticResource NodeLinkPreviewControlTemplate}" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding NodeLinkStart, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:WorkspaceControl}}}" Value="{x:Null}">
+                <Setter Property="Visibility" Value="Collapsed" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding NodeLinkEnd, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:WorkspaceControl}}}" Value="{x:Null}">
+                <Setter Property="Visibility" Value="Collapsed" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <DataTemplate DataType="{x:Type core:NodeLinkPreview}">
+        <controls:NodeLinkPreviewControl />
+    </DataTemplate>
+
+</ResourceDictionary>

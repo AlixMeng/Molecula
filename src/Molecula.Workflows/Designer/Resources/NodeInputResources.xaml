@@ -1,0 +1,26 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Molecula.Workflows.Designer.Controls">
+
+    <ControlTemplate x:Key="NodeInputControlTemplate" TargetType="controls:NodeInputControl">
+        <Border
+            x:Name="PART_Border"
+            Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
+            BorderThickness="{TemplateBinding BorderThickness}">
+            <Grid>
+                <ContentPresenter Margin="{TemplateBinding Padding}" Content="{TemplateBinding Content}" />
+                <Thumb Opacity="0" />
+            </Grid>
+        </Border>
+    </ControlTemplate>
+
+    <Style TargetType="controls:NodeInputControl">
+        <Setter Property="Template" Value="{StaticResource NodeInputControlTemplate}" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="Padding" Value="2" />
+    </Style>
+
+</ResourceDictionary>

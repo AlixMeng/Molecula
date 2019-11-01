@@ -45,6 +45,11 @@ namespace Molecula.UI.Markups
         internal static void SetResourceProxies(FrameworkElement element, ObservableDictionary<object, ResourceProxy> value)
             => element.SetValue(ResourceProxiesProperty, value);
 
+        public DynamicResourceBindingExtension()
+        {
+
+        }
+
         public DynamicResourceBindingExtension(PropertyPath path)
         {
             Path = path;
@@ -68,7 +73,6 @@ namespace Molecula.UI.Markups
                 },
                 Converter = MultiBindingConverter.Instance,
                 ConverterParameter = (Binding: resourceKeyBinding, Property: targetProperty),
-                TargetNullValue = "not translated!",
                 Mode = BindingMode.OneWay
             };
 

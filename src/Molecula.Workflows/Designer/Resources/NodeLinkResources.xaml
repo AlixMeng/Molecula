@@ -1,0 +1,61 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Molecula.Workflows.Designer.Controls"
+    xmlns:converter="clr-namespace:Molecula.Workflows.Designer.Converter"
+    xmlns:core="clr-namespace:Molecula.Workflows.Designer.Core"
+    xmlns:molmark="http://schemas.molecula.com/molecula/2019/markups/xaml"
+    xmlns:pmvvm="http://schemas.pamucuk.com/pamucuk/2019/mvvm/xaml">
+
+    <ControlTemplate x:Key="NodeLinkControlTemplate" TargetType="controls:NodeLinkControl">
+        <Path
+            x:Name="PART_Path"
+            IsHitTestVisible="True"
+            StrokeThickness="4">
+            <Path.Stroke>
+                <MultiBinding Converter="{x:Static converter:NodeLinkStrokeConverter.Instance}">
+                    <Binding Path="DataContext.StartNode.X" RelativeSource="{RelativeSource TemplatedParent}" />
+                    <Binding Path="DataContext.StartNode.Width" RelativeSource="{RelativeSource TemplatedParent}" />
+                    <Binding Path="DataContext.EndNode.X" RelativeSource="{RelativeSource TemplatedParent}" />
+                    <Binding Path="DataContext.EndNode.ItemType" RelativeSource="{RelativeSource TemplatedParent}" />
+                    <Binding Mode="OneTime" RelativeSource="{RelativeSource TemplatedParent}" />
+                </MultiBinding>
+            </Path.Stroke>
+            <Path.Data>
+                <PathGeometry>
+                    <PathGeometry.Figures>
+                        <MultiBinding Converter="{x:Static converter:NodeLinkContentConverter.Instance}">
+                            <Binding Path="DataContext.StartNode.X" RelativeSource="{RelativeSource TemplatedParent}" />
+                            <Binding Path="DataContext.StartNode.Y" RelativeSource="{RelativeSource TemplatedParent}" />
+                            <Binding Path="DataContext.EndNode.X" RelativeSource="{RelativeSource TemplatedParent}" />
+                            <Binding Path="DataContext.EndNode.Y" RelativeSource="{RelativeSource TemplatedParent}" />
+                            <Binding Path="DataContext.StartNode.Width" RelativeSource="{RelativeSource TemplatedParent}" />
+                            <Binding Path="DataContext.StartNode.Height" RelativeSource="{RelativeSource TemplatedParent}" />
+                            <Binding Path="DataContext.EndNode.Width" RelativeSource="{RelativeSource TemplatedParent}" />
+                            <Binding Path="DataContext.EndNode.Height" RelativeSource="{RelativeSource TemplatedParent}" />
+                        </MultiBinding>
+                    </PathGeometry.Figures>
+                </PathGeometry>
+            </Path.Data>
+        </Path>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter TargetName="PART_Path" Property="StrokeDashArray" Value="3,1" />
+                <Setter Property="Panel.ZIndex" Value="3" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="PART_Path" Property="StrokeThickness" Value="6" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style TargetType="controls:NodeLinkControl">
+        <Setter Property="Panel.ZIndex" Value="1" />
+        <Setter Property="Template" Value="{StaticResource NodeLinkControlTemplate}" />
+    </Style>
+
+    <DataTemplate DataType="{x:Type core:NodeLink}">
+        <controls:NodeLinkControl IsChecked="{Binding IsChecked}" />
+    </DataTemplate>
+
+</ResourceDictionary>

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29020.237
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Molecula", "Molecula\Molecula.csproj", "{E8590BAF-B67F-4F5E-9BFA-61F170B5242D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Molecula", "Molecula\Molecula.csproj", "{E8590BAF-B67F-4F5E-9BFA-61F170B5242D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{6775F744-63B0-466F-AF31-4B06C9417974}"
 EndProject
@@ -20,9 +20,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLite", "SQLite", "{26DB52
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SqlServer", "SqlServer", "{82FF4E1E-6216-4C47-9DAE-9C2D649B5825}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Molecula.UI", "Molecula.UI\Molecula.UI.csproj", "{5E043799-C6B6-4EDE-9995-2404B9C8B059}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Molecula.UI", "Molecula.UI\Molecula.UI.csproj", "{5E043799-C6B6-4EDE-9995-2404B9C8B059}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Molecula.Abstractions", "Molecula.Abstractions\Molecula.Abstractions.csproj", "{A63FD3FE-1AFA-42F7-956A-5DD80A0BD4DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Molecula.Abstractions", "Molecula.Abstractions\Molecula.Abstractions.csproj", "{A63FD3FE-1AFA-42F7-956A-5DD80A0BD4DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Molecula.Workflows", "Molecula.Workflows\Molecula.Workflows.csproj", "{BE60D04E-A013-4B86-A8C2-3EF4103556CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Molecula.Core", "Molecula.Core\Molecula.Core.csproj", "{1FDAFC0B-AB4F-4CF2-9141-EA1BE79499DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +46,14 @@ Global
 		{A63FD3FE-1AFA-42F7-956A-5DD80A0BD4DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A63FD3FE-1AFA-42F7-956A-5DD80A0BD4DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A63FD3FE-1AFA-42F7-956A-5DD80A0BD4DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE60D04E-A013-4B86-A8C2-3EF4103556CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE60D04E-A013-4B86-A8C2-3EF4103556CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE60D04E-A013-4B86-A8C2-3EF4103556CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE60D04E-A013-4B86-A8C2-3EF4103556CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FDAFC0B-AB4F-4CF2-9141-EA1BE79499DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FDAFC0B-AB4F-4CF2-9141-EA1BE79499DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FDAFC0B-AB4F-4CF2-9141-EA1BE79499DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FDAFC0B-AB4F-4CF2-9141-EA1BE79499DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

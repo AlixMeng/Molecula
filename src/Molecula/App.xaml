@@ -5,8 +5,11 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Molecula.Workflows;component/Designer/Resources/AllDesignerResources.xaml" />
+
                 <ResourceDictionary Source="/molecula;component/resources/Login.xaml" />
                 <ResourceDictionary Source="/molecula;component/resources/MainMenu.xaml" />
+                <ResourceDictionary Source="/molecula;component/resources/WorkflowDesigner.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <Style TargetType="Ribbon">

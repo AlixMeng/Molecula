@@ -43,13 +43,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Pamucuk.Mvvm" Version="4.2.0" />
+    <PackageReference Include="Pamucuk.Mvvm" Version="5.0.0" />
     <PackageReference Include="Pamucuk.UI" Version="4.1.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Molecula.Abstractions\Molecula.Abstractions.csproj" />
     <ProjectReference Include="..\Molecula.UI\Molecula.UI.csproj" />
+    <ProjectReference Include="..\Molecula.Workflows\Molecula.Workflows.csproj" />
   </ItemGroup>
 
   <ItemGroup>

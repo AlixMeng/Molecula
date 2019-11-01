@@ -1,0 +1,83 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Molecula.Workflows.Designer.Controls"
+    xmlns:converter="clr-namespace:Molecula.Workflows.Designer.Converter"
+    xmlns:core="clr-namespace:Molecula.Workflows.Designer.Core"
+    xmlns:pmvvm="http://schemas.pamucuk.com/pamucuk/2019/mvvm/xaml">
+
+    <ControlTemplate x:Key="WorkspaceControlTemplate" TargetType="controls:WorkspaceControl">
+        <ScrollViewer
+            x:Name="PART_ScrollViewer"
+            HorizontalScrollBarVisibility="Visible"
+            VerticalScrollBarVisibility="Visible">
+            <Border BorderBrush="#66000000" BorderThickness="1">
+                <Border.Background>
+                    <VisualBrush
+                        TileMode="Tile"
+                        Viewbox="0,0,25,25"
+                        ViewboxUnits="Absolute"
+                        Viewport="0,0,25,25"
+                        ViewportUnits="Absolute">
+                        <VisualBrush.Visual>
+                            <Grid>
+                                <Line
+                                    Fill="#66000000"
+                                    Stroke="#66000000"
+                                    StrokeThickness="1"
+                                    X1="0"
+                                    X2="25"
+                                    Y1="0"
+                                    Y2="0" />
+                                <Line
+                                    Fill="#66000000"
+                                    Stroke="#66000000"
+                                    StrokeThickness="1"
+                                    X1="0"
+                                    X2="0"
+                                    Y1="25"
+                                    Y2="0" />
+                            </Grid>
+                        </VisualBrush.Visual>
+                    </VisualBrush>
+                </Border.Background>
+                <ItemsControl
+                    Width="10000"
+                    Height="10000"
+                    ItemsSource="{Binding Items}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </Border>
+        </ScrollViewer>
+    </ControlTemplate>
+
+    <Style TargetType="controls:WorkspaceControl">
+        <Setter Property="Template" Value="{StaticResource WorkspaceControlTemplate}" />
+    </Style>
+
+    <DataTemplate DataType="{x:Type core:Workspace}">
+        <controls:WorkspaceControl
+            KeyUp="{pmvvm:EventToCommand DeleteSelectedItemsCommand,
+                                         EventArgsConverter={x:Static converter:KeyEventArgsConverter.Instance}}"
+            LeftOffset="{Binding HorizontalOffset, Mode=TwoWay}"
+            TopOffset="{Binding VerticalOffset, Mode=TwoWay}">
+            <controls:WorkspaceControl.NodeLinkStart>
+                <MultiBinding Converter="{x:Static converter:CoordinatesToPointConverter.Instance}">
+                    <Binding Path="LinkPreviewStartX" />
+                    <Binding Path="LinkPreviewStartY" />
+                </MultiBinding>
+            </controls:WorkspaceControl.NodeLinkStart>
+            <controls:WorkspaceControl.NodeLinkEnd>
+                <MultiBinding Converter="{x:Static converter:CoordinatesToPointConverter.Instance}">
+                    <Binding Path="LinkPreviewEndX" />
+                    <Binding Path="LinkPreviewEndY" />
+                </MultiBinding>
+            </controls:WorkspaceControl.NodeLinkEnd>
+        </controls:WorkspaceControl>
+    </DataTemplate>
+
+</ResourceDictionary>

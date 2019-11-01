@@ -60,6 +60,9 @@ namespace Molecula.UI.Programs
 
         private static void EnsureProgramResources(string program)
         {
+            if (IsProgramLoaded(program))
+                return;
+
             var resourcePath = GetProgramPath(program);
             if (!ExistsProgram(resourcePath))
             {
@@ -73,6 +76,9 @@ namespace Molecula.UI.Programs
             var resourceDictionary = new ResourceDictionary {Source = programUri };
             Application.Current.Resources.MergedDictionaries.Add(resourceDictionary);
         }
+
+        private static bool IsProgramLoaded(string program)
+            => Application.Current.TryFindResource($"{program}.Content.Template") != null;
 
         private static void CreateProgramFromTemplate(string program, string resourcePath)
         {

@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Pamucuk.Mvvm" Version="5.0.0" />
+    <PackageReference Include="Pamucuk.UI" Version="4.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Molecula.Core\Molecula.Core.csproj" />
+    <ProjectReference Include="..\Molecula.UI\Molecula.UI.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -35,10 +35,10 @@
                 <play:LabelItem Label="{DynamicResource Login.Password.Label}">
                     <PasswordBox
                         extensions:FocusExtension.FocusId="Password"
-                        KeyUp="{pmvvm:EventToCommand DataContext.LoginCommand,
+                        KeyUp="{pmvvm:EventToCommand LoginCommand,
                                                      EventArgsConverter={StaticResource IsKeyConverter},
                                                      EventArgsConverterParameter={x:Static Key.Enter}}"
-                        PasswordChanged="{pmvvm:EventToCommand DataContext.SetPasswordCommand,
+                        PasswordChanged="{pmvvm:EventToCommand SetPasswordCommand,
                                                                EventArgsConverter={StaticResource PasswordChangedConverter}}" />
                 </play:LabelItem>
                 <play:LabelItem Label="{DynamicResource Login.Language.Label}">

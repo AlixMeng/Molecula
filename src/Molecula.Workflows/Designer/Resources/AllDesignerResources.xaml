@@ -1,0 +1,15 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="DesignerNodeResources.xaml" />
+        <ResourceDictionary Source="NodeInputResources.xaml" />
+        <ResourceDictionary Source="NodeLinkPreviewResources.xaml" />
+        <ResourceDictionary Source="NodeLinkResources.xaml" />
+        <ResourceDictionary Source="NodeMoveResources.xaml" />
+        <ResourceDictionary Source="NodeOutputResources.xaml" />
+        <ResourceDictionary Source="NodeResources.xaml" />
+        <ResourceDictionary Source="NodesResources.xaml" />
+        <ResourceDictionary Source="WorkspaceResources.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

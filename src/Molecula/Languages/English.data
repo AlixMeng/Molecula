@@ -56,3 +56,6 @@ Methods.QuickStartButton.Text=Methods
 
 Lookups.Window.Title=Molecula - Lookups
 Lookups.QuickStartButton.Text=Lookups
+
+WorkflowDesigner.Window.Title=Molecula - Workflow Designer
+WorkflowDesigner.QuickStartButton.Text=Workflow Designer

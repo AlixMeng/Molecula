@@ -25,3 +25,6 @@
 
 - Id: Lookups
   Menu: StaticData/Configuration
+
+- Id: WorkflowDesigner
+  Menu: StaticData/Configuration
