@@ -33,42 +33,7 @@
             <pdock:DockingManager Grid.Row="1">
                 <pdock:DockingGroup Orientation="Horizontal">
                     <pdock:DockingPanel Caption="Toolbox" ItemWidth="20*">
-                        <ItemsControl>
-                            <ItemsControl.Items>
-                                <controls:DesignerNodeControl
-                                    Command="{Binding CurrentWorkspace.AddNodeCommand}"
-                                    CommandParameter="{x:Type nodes:FunctionNode}"
-                                    NodeType="{x:Type nodes:FunctionNode}" />
-                                <controls:DesignerNodeControl
-                                    Command="{Binding CurrentWorkspace.AddNodeCommand}"
-                                    CommandParameter="{x:Type nodes:AssignNode}"
-                                    NodeType="{x:Type nodes:AssignNode}" />
-                                <controls:DesignerNodeControl
-                                    Command="{Binding CurrentWorkspace.AddNodeCommand}"
-                                    CommandParameter="{x:Type nodes:SwitchNode}"
-                                    NodeType="{x:Type nodes:SwitchNode}" />
-                                <controls:DesignerNodeControl
-                                    Command="{Binding CurrentWorkspace.AddNodeCommand}"
-                                    CommandParameter="{x:Type nodes:FlowNode}"
-                                    NodeType="{x:Type nodes:FlowNode}" />
-                                <controls:DesignerNodeControl
-                                    Command="{Binding CurrentWorkspace.AddNodeCommand}"
-                                    CommandParameter="{x:Type nodes:SnippetNode}"
-                                    NodeType="{x:Type nodes:SnippetNode}" />
-                                <controls:DesignerNodeControl
-                                    Command="{Binding CurrentWorkspace.AddNodeCommand}"
-                                    CommandParameter="{x:Type nodes:DebugNode}"
-                                    NodeType="{x:Type nodes:DebugNode}" />
-                                <controls:DesignerNodeControl
-                                    Command="{Binding CurrentWorkspace.AddNodeCommand}"
-                                    CommandParameter="{x:Type nodes:ReturnNode}"
-                                    NodeType="{x:Type nodes:ReturnNode}" />
-                                <controls:DesignerNodeControl
-                                    Command="{Binding CurrentWorkspace.AddNodeCommand}"
-                                    CommandParameter="{x:Type nodes:ThrowNode}"
-                                    NodeType="{x:Type nodes:ThrowNode}" />
-                            </ItemsControl.Items>
-                        </ItemsControl>
+                        <controls:WorkflowItemToolboxContainerControl Content="{Binding WorkflowItemToolbox}" />
                     </pdock:DockingPanel>
                     <pdock:DockingPanel
                         CanScrollContent="False"

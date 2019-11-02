@@ -57,11 +57,12 @@
 
     <Style TargetType="controls:WorkspaceControl">
         <Setter Property="Template" Value="{StaticResource WorkspaceControlTemplate}" />
+        <Setter Property="Focusable" Value="True" />
     </Style>
 
     <DataTemplate DataType="{x:Type core:Workspace}">
         <controls:WorkspaceControl
-            KeyUp="{pmvvm:EventToCommand DeleteSelectedItemsCommand,
+            KeyUp="{pmvvm:EventToCommand ProcessKeyCommand,
                                          EventArgsConverter={x:Static converter:KeyEventArgsConverter.Instance}}"
             LeftOffset="{Binding HorizontalOffset, Mode=TwoWay}"
             TopOffset="{Binding VerticalOffset, Mode=TwoWay}">

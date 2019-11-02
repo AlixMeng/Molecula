@@ -20,13 +20,21 @@ namespace Molecula.ViewModels
             set => Set(ref _currentWorkspace, value);
         }
 
-        public WorkflowDesignerViewModel(Func<IWorkspace> workspaceFactory)
+        private IWorkflowItemToolbox _workflowItemToolbox;
+        public IWorkflowItemToolbox WorkflowItemToolbox
+        {
+            get => _workflowItemToolbox;
+            set => Set(ref _workflowItemToolbox, value);
+        }
+
+        public WorkflowDesignerViewModel(Func<IWorkspace> workspaceFactory, IWorkflowItemToolbox toolbox)
         {
             var workspace = workspaceFactory();
             workspace.Name = "Test";
             workspace.AddNode(typeof(StartNode));
             Workspaces.Add(workspace);
             CurrentWorkspace = workspace;
+            WorkflowItemToolbox = toolbox;
         }
     }
 }

@@ -76,6 +76,8 @@ namespace Molecula.Bootstrapping
         {
             _ioc.Register<WorkflowDesignerViewModel, IWorkflowDesignerViewModel>();
             _ioc.Register<Workspace, IWorkspace>();
+            _ioc.Register<WorkflowItemToolbox, IWorkflowItemToolbox>();
+            _ioc.Register<DesignerNode, IDesignerNode>();
             _ioc.Register<NodeLink, INodeLink>();
             _ioc.Register<AssignNode, IAssignNode>();
             _ioc.Register<DebugNode, IDebugNode>();

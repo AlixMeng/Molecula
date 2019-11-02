@@ -11,7 +11,7 @@ namespace Molecula.Abstractions.Workflows.Core
         double HorizontalOffset { get; set; }
         double VerticalOffset { get; set; }
         ICommand AddNodeCommand { get; }
-        ICommand DeleteSelectedItemsCommand { get; }
+        ICommand ProcessKeyCommand { get; }
         string Name { get; set; }
 
         void AddNode(Type nodeType);

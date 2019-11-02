@@ -10,6 +10,9 @@
         <ResourceDictionary Source="NodeResources.xaml" />
         <ResourceDictionary Source="NodesResources.xaml" />
         <ResourceDictionary Source="WorkspaceResources.xaml" />
+        <ResourceDictionary Source="DesignerNodeResources.xaml" />
+        <ResourceDictionary Source="WorkflowItemToolbarResources.xaml" />
+        <ResourceDictionary Source="WorkflowItemToolboxContainerResources.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

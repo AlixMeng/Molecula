@@ -152,7 +152,7 @@ namespace Molecula.Workflows.Designer.Core
         public Workspace(ICommandFactory commandFactory)
         {
             AddNodeCommand = commandFactory.Create<Type>(AddNode);
-            DeleteSelectedItemsCommand = commandFactory.Create<(Key Key, ModifierKeys Modifiers)?>(DeleteSelectedItems, CanDeleteSelectedItems);
+            ProcessKeyCommand = commandFactory.Create<(Key Key, ModifierKeys Modifiers)?>(ProcessKey);
             _items.Add(new NodeLinkPreview());
         }
 
@@ -168,10 +168,28 @@ namespace Molecula.Workflows.Designer.Core
             Add(node);
         }
 
-        public ICommand DeleteSelectedItemsCommand { get; }
+        public ICommand ProcessKeyCommand { get; }
+        
+        private void ProcessKey((Key Key, ModifierKeys Modifiers)? parameter)
+        {
+            var key = parameter?.Key ?? Key.None;
+            switch (key)
+            {
+                case Key.Delete:
+                    DeleteSelectedItems();
+                    break;
+                case Key.Escape:
+                    ClearSelection();
+                    break;
+            }
+
+        }
 
         public void DeleteSelectedItems()
-            => DeleteSelectedItems(null);
+            => Items
+                .Where(item => item.IsChecked)
+                .ToArray()
+                .ForEach(Remove);
 
         private void ClearSelection()
         {
@@ -192,17 +210,6 @@ namespace Molecula.Workflows.Designer.Core
                && x <= node.X + node.Width
                && node.Y <= y
                && y <= node.Y + node.Height;
-
-        private static bool CanDeleteSelectedItems((Key Key, ModifierKeys Modifiers)? parameter)
-        {
-            return parameter?.Key == Key.Delete;
-        }
-
-        private void DeleteSelectedItems((Key Key, ModifierKeys Modifiers)? parameter)
-            => Items
-                .Where(item => item.IsChecked)
-                .ToArray()
-                .ForEach(Remove);
 
         private void Remove(IWorkflowItem item)
         {
