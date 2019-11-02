@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows.Input;
 using Molecula.Abstractions.Workflows.Core;
 using Molecula.Abstractions.Workflows.Nodes;
 using Pamucuk.Mvvm.Observables;
@@ -13,6 +14,11 @@ namespace Molecula.Workflows.Designer.Core
         private readonly Func<IDesignerNode> _designerNodeFactory;
         private ObservableCollection<IDesignerNode> _items;
         public IEnumerable<IDesignerNode> Items => _items;
+
+        public ICommand StartConnectionCommand { get; } = null;
+        public ICommand MoveConnectionCommand { get; } = null;
+        public ICommand StopConnectionCommand { get; } = null;
+        public ICommand MoveNodeCommand { get; } = null;
 
         public WorkflowItemToolbox(Func<IDesignerNode> designerNodeFactory)
         {

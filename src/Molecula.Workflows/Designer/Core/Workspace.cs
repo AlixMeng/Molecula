@@ -17,7 +17,6 @@ namespace Molecula.Workflows.Designer.Core
         public IEnumerable<IWorkflowItem> Items => _items;
 
         private double _horizontalOffset;
-
         public double HorizontalOffset
         {
             get => _horizontalOffset;
@@ -25,7 +24,6 @@ namespace Molecula.Workflows.Designer.Core
         }
 
         private double _verticalOffset;
-
         public double VerticalOffset
         {
             get => _verticalOffset;
@@ -33,134 +31,41 @@ namespace Molecula.Workflows.Designer.Core
         }
 
         private string _name;
-
         public string Name
         {
             get => _name;
             set => Set(ref _name, value);
         }
 
-        private double? _linkPreviewStartX;
-
-        public double? LinkPreviewStartX
+        private INodeLinkPreview _nodeLinkPreview;
+        public INodeLinkPreview NodeLinkPreview
         {
-            get => _linkPreviewStartX;
-            set => Set(ref _linkPreviewStartX, value);
-        }
-
-        private double? _linkPreviewStartY;
-
-        public double? LinkPreviewStartY
-        {
-            get => _linkPreviewStartY;
-            set => Set(ref _linkPreviewStartY, value);
-        }
-
-        private double? _linkPreviewEndX;
-
-        public double? LinkPreviewEndX
-        {
-            get => _linkPreviewEndX;
-            set => Set(ref _linkPreviewEndX, value);
-        }
-
-        private double? _linkPreviewEndY;
-
-        public double? LinkPreviewEndY
-        {
-            get => _linkPreviewEndY;
-            set => Set(ref _linkPreviewEndY, value);
-        }
-
-
-        private ICommand _startConnectionCommand;
-
-        public ICommand StartConnectionCommand =>
-            _startConnectionCommand ??=
-                new RelayCommand<(double HorizontalOffset, double VerticalOffset, double X, double Y, double Width, double Height, object Item)>(StartConnection);
-
-        private void StartConnection((double HorizontalOffset, double VerticalOffset, double X, double Y, double Width, double Height, object Item) connectStart)
-        {
-            var startX = connectStart.X + connectStart.Width;
-            var startY = connectStart.Y + (connectStart.Height / 2);
-
-            if (!IsLinkAllowed(startX, startY, node => node.HasOutput)) 
-                return;
-            
-            LinkPreviewStartX = startX;
-            LinkPreviewStartY = startY;
-            LinkPreviewEndX = LinkPreviewStartX;
-            LinkPreviewEndY = LinkPreviewStartY;
-        }
-
-        private ICommand _moveConnectionCommand;
-
-        public ICommand MoveConnectionCommand =>
-            _moveConnectionCommand ??= new RelayCommand<(double HorizontalChange, double VerticalChange, double X, double Y, double Width, double Height, object Item)>(MoveConnection);
-
-        private void MoveConnection((double HorizontalChange, double VerticalChange, double X, double Y, double Width, double Height, object Item) connectDelta)
-        {
-            if (!IsLinkAllowed(LinkPreviewStartX, LinkPreviewStartY, node => node.HasOutput))
-                return;
-
-            LinkPreviewEndX = connectDelta.X + connectDelta.Width + connectDelta.HorizontalChange;
-            LinkPreviewEndY = connectDelta.Y + (connectDelta.Height / 2) + connectDelta.VerticalChange;
-        }
-
-        private ICommand _stopConnectionCommand;
-
-        public ICommand StopConnectionCommand =>
-            _stopConnectionCommand ??= new RelayCommand<(double HorizontalChange, double VerticalChange, double X, double Y, double Width, double Height, object Item)>(StopConnection);
-
-        private void StopConnection((double HorizontalChange, double VerticalChange, double X, double Y, double Width, double Height, object Item) connectComplete)
-        {
-            var startNode = FindNode(LinkPreviewStartX - 5, LinkPreviewStartY);
-            var endNode = FindNode(LinkPreviewEndX, LinkPreviewEndY);
-
-            if (startNode != null 
-                && endNode != null
-                && startNode != endNode
-                && startNode.HasOutput
-                && endNode.HasInput)
-            {
-                AddLink(startNode, endNode);
-            }
-
-            ClearSelection();
-
-            LinkPreviewStartX = default;
-            LinkPreviewStartY = default;
-            LinkPreviewEndX = default;
-            LinkPreviewEndY = default;
-        }
-
-        private ICommand _moveCommand;
-        public ICommand MoveCommand => _moveCommand ??= new RelayCommand<(double HorizontalChange, double VerticalChange, double X, double Y, double Width, double Height, object Item)>(Move);
-
-        private void Move((double HorizontalChange, double VerticalChange, double X, double Y, double Width, double Height, object Item) moveDelta)
-        {
-            _items
-                .OfType<BaseNode>()
-                .Where(node => node == moveDelta.Item || node.IsChecked)
-                .ForEach(node =>
-                {
-                    node.X += moveDelta.HorizontalChange;
-                    node.Y += moveDelta.VerticalChange;
-                });
-        }
-
-        public Workspace(ICommandFactory commandFactory)
-        {
-            AddNodeCommand = commandFactory.Create<Type>(AddNode);
-            ProcessKeyCommand = commandFactory.Create<(Key Key, ModifierKeys Modifiers)?>(ProcessKey);
-            _items.Add(new NodeLinkPreview());
+            get => _nodeLinkPreview;
+            private set => Set(ref _nodeLinkPreview, value);
         }
 
         public ICommand AddNodeCommand { get; }
+        public ICommand ProcessKeyCommand { get; }
+        public ICommand StartConnectionCommand { get; }
+        public ICommand MoveConnectionCommand { get; }
+        public ICommand StopConnectionCommand { get; }
+        public ICommand MoveNodeCommand { get; }
+
+        public Workspace(ICommandFactory commandFactory, Func<INodeLinkPreview> nodeLinkPreviewFactory)
+        {
+            AddNodeCommand = commandFactory.Create<Type>(AddNode);
+            ProcessKeyCommand = commandFactory.Create<(Key Key, ModifierKeys Modifiers)?>(ProcessKey);
+            StartConnectionCommand = commandFactory.Create<(double HorizontalOffset, double VerticalOffset, double X, double Y, double Width, double Height, object Item)>(StartConnection);
+            MoveConnectionCommand = commandFactory.Create<(double HorizontalChange, double VerticalChange, double X, double Y, double Width, double Height, object Item)>(MoveConnection);
+            StopConnectionCommand = commandFactory.Create<(double HorizontalChange, double VerticalChange, double X, double Y, double Width, double Height, object Item)>(StopConnection);
+            MoveNodeCommand = commandFactory.Create<(double HorizontalChange, double VerticalChange, double X, double Y, double Width, double Height, object Item)>(MoveNode);
+            NodeLinkPreview = nodeLinkPreviewFactory();
+            _items.Add(NodeLinkPreview);
+        }
 
         public void AddNode(Type nodeType)
         {
-            var node = (BaseNode) Activator.CreateInstance(nodeType);
+            var node = (BaseNode)Activator.CreateInstance(nodeType);
 
             node.X = HorizontalOffset + 10;
             node.Y = VerticalOffset + 10;
@@ -168,8 +73,17 @@ namespace Molecula.Workflows.Designer.Core
             Add(node);
         }
 
-        public ICommand ProcessKeyCommand { get; }
-        
+        public void DeleteSelectedItems()
+            => Items
+                .Where(item => item.IsChecked)
+                .ToArray()
+                .ForEach(Remove);
+
+        public void ClearSelection()
+        {
+            _items.ForEach(item => item.IsChecked = false);
+        }
+
         private void ProcessKey((Key Key, ModifierKeys Modifiers)? parameter)
         {
             var key = parameter?.Key ?? Key.None;
@@ -185,15 +99,61 @@ namespace Molecula.Workflows.Designer.Core
 
         }
 
-        public void DeleteSelectedItems()
-            => Items
-                .Where(item => item.IsChecked)
-                .ToArray()
-                .ForEach(Remove);
-
-        private void ClearSelection()
+        private void StartConnection((double HorizontalOffset, double VerticalOffset, double X, double Y, double Width, double Height, object Item) connectStart)
         {
-            _items.ForEach(item => item.IsChecked = false);
+            var startX = connectStart.X + connectStart.Width;
+            var startY = connectStart.Y + (connectStart.Height / 2);
+
+            if (!IsLinkAllowed(startX, startY, node => node.HasOutput))
+                return;
+
+            NodeLinkPreview.LinkPreviewStartX = startX;
+            NodeLinkPreview.LinkPreviewStartY = startY;
+            NodeLinkPreview.LinkPreviewEndX = NodeLinkPreview.LinkPreviewStartX;
+            NodeLinkPreview.LinkPreviewEndY = NodeLinkPreview.LinkPreviewStartY;
+        }
+
+        private void MoveConnection((double HorizontalChange, double VerticalChange, double X, double Y, double Width, double Height, object Item) connectDelta)
+        {
+            if (!IsLinkAllowed(NodeLinkPreview.LinkPreviewStartX, NodeLinkPreview.LinkPreviewStartY, node => node.HasOutput))
+                return;
+
+            NodeLinkPreview.LinkPreviewEndX = connectDelta.X + connectDelta.Width + connectDelta.HorizontalChange;
+            NodeLinkPreview.LinkPreviewEndY = connectDelta.Y + (connectDelta.Height / 2) + connectDelta.VerticalChange;
+        }
+
+        private void StopConnection((double HorizontalChange, double VerticalChange, double X, double Y, double Width, double Height, object Item) connectComplete)
+        {
+            var startNode = FindNode(NodeLinkPreview.LinkPreviewStartX - 5, NodeLinkPreview.LinkPreviewStartY);
+            var endNode = FindNode(NodeLinkPreview.LinkPreviewEndX, NodeLinkPreview.LinkPreviewEndY);
+
+            if (startNode != null
+                && endNode != null
+                && startNode != endNode
+                && startNode.HasOutput
+                && endNode.HasInput)
+            {
+                AddLink(startNode, endNode);
+            }
+
+            ClearSelection();
+
+            NodeLinkPreview.LinkPreviewStartX = default;
+            NodeLinkPreview.LinkPreviewStartY = default;
+            NodeLinkPreview.LinkPreviewEndX = default;
+            NodeLinkPreview.LinkPreviewEndY = default;
+        }
+
+        private void MoveNode((double HorizontalChange, double VerticalChange, double X, double Y, double Width, double Height, object Item) moveDelta)
+        {
+            _items
+                .OfType<BaseNode>()
+                .Where(node => node == moveDelta.Item || node.IsChecked)
+                .ForEach(node =>
+                {
+                    node.X += moveDelta.HorizontalChange;
+                    node.Y += moveDelta.VerticalChange;
+                });
         }
 
         private bool IsLinkAllowed(double? startX, double? startY, Func<BaseNode, bool> isAllowed)
@@ -214,7 +174,7 @@ namespace Molecula.Workflows.Designer.Core
         private void Remove(IWorkflowItem item)
         {
             _items.Remove(item);
-            PostProcessRemove((dynamic) item);
+            PostProcessRemove((dynamic)item);
         }
 
         private static void PostProcessRemove(NodeLink link)
@@ -246,7 +206,7 @@ namespace Molecula.Workflows.Designer.Core
             {
                 RemoveLinks(startNode);
             }
-            
+
             var link = CreateLink(startNode, endNode);
             Add(link);
         }

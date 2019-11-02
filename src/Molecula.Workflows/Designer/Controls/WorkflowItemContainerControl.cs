@@ -2,9 +2,9 @@
 
 namespace Molecula.Workflows.Designer.Controls
 {
-    public class WorkflowItemContainer : Control
+    public class WorkflowItemContainerControl : Control
     {
-        protected WorkflowItemContainer()
+        protected WorkflowItemContainerControl()
         {
 
         }

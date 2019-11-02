@@ -57,10 +57,10 @@
                         Background="#23FFFFFF"
                         BorderBrush="Black"
                         BorderThickness="1,0,1,0"
-                        DragDelta="{pmvvm:EventToCommand Path=DataContext.MoveCommand,
+                        DragDelta="{pmvvm:EventToCommand Path=DataContext.MoveNodeCommand,
                                                          EventArgsConverter={x:Static converter:DragDeltaArgsConverter.Instance},
                                                          RelativeSource={RelativeSource FindAncestor,
-                                                                                        AncestorType={x:Type controls:WorkflowItemContainer}}}">
+                                                                                        AncestorType={x:Type controls:WorkflowItemContainerControl}}}">
                         <TextBlock
                             Margin="{Binding Padding, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:NodeControl}}}"
                             HorizontalAlignment="Center"
@@ -74,15 +74,15 @@
                         DragCompleted="{pmvvm:EventToCommand Path=DataContext.StopConnectionCommand,
                                                              EventArgsConverter={x:Static converter:DragCompletedArgsConverter.Instance},
                                                              RelativeSource={RelativeSource FindAncestor,
-                                                                                            AncestorType={x:Type controls:WorkflowItemContainer}}}"
+                                                                                            AncestorType={x:Type controls:WorkflowItemContainerControl}}}"
                         DragDelta="{pmvvm:EventToCommand Path=DataContext.MoveConnectionCommand,
                                                          EventArgsConverter={x:Static converter:DragDeltaArgsConverter.Instance},
                                                          RelativeSource={RelativeSource FindAncestor,
-                                                                                        AncestorType={x:Type controls:WorkflowItemContainer}}}"
+                                                                                        AncestorType={x:Type controls:WorkflowItemContainerControl}}}"
                         DragStarted="{pmvvm:EventToCommand Path=DataContext.StartConnectionCommand,
                                                            EventArgsConverter={x:Static converter:NodeDragStartedArgsConverter.Instance},
                                                            RelativeSource={RelativeSource FindAncestor,
-                                                                                          AncestorType={x:Type controls:WorkflowItemContainer}}}"
+                                                                                          AncestorType={x:Type controls:WorkflowItemContainerControl}}}"
                         Visibility="{Binding HasOutput, Converter={StaticResource BoolToVisibilityConverter}}">
                         <Ellipse
                             Width="10"

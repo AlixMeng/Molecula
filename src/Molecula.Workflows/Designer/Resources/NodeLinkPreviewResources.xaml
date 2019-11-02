@@ -6,18 +6,19 @@
 
     <ControlTemplate x:Key="NodeLinkPreviewControlTemplate" TargetType="controls:NodeLinkPreviewControl">
         <Path
+            x:Name="PART_Path"
             Panel.ZIndex="3"
             Stroke="CornflowerBlue"
             StrokeDashArray="2,1"
             StrokeThickness="4">
             <Path.Data>
-                <PathGeometry>
+                <PathGeometry x:Name="PART_Geometry">
                     <PathGeometry.Figures>
                         <MultiBinding Converter="{x:Static converter:NodeLinkContentConverter.Instance}">
-                            <Binding Path="NodeLinkStart.X" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type controls:WorkspaceControl}}" />
-                            <Binding Path="NodeLinkStart.Y" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type controls:WorkspaceControl}}" />
-                            <Binding Path="NodeLinkEnd.X" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type controls:WorkspaceControl}}" />
-                            <Binding Path="NodeLinkEnd.Y" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type controls:WorkspaceControl}}" />
+                            <Binding Path="DataContext.LinkPreviewStartX" RelativeSource="{RelativeSource TemplatedParent}" />
+                            <Binding Path="DataContext.LinkPreviewStartY" RelativeSource="{RelativeSource TemplatedParent}" />
+                            <Binding Path="DataContext.LinkPreviewEndX" RelativeSource="{RelativeSource TemplatedParent}" />
+                            <Binding Path="DataContext.LinkPreviewEndY" RelativeSource="{RelativeSource TemplatedParent}" />
                         </MultiBinding>
                     </PathGeometry.Figures>
                 </PathGeometry>

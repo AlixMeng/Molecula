@@ -22,7 +22,7 @@
                 </MultiBinding>
             </Path.Stroke>
             <Path.Data>
-                <PathGeometry>
+                <PathGeometry x:Name="PART_Geometry">
                     <PathGeometry.Figures>
                         <MultiBinding Converter="{x:Static converter:NodeLinkContentConverter.Instance}">
                             <Binding Path="DataContext.StartNode.X" RelativeSource="{RelativeSource TemplatedParent}" />

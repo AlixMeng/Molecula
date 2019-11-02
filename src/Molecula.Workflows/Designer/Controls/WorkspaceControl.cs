@@ -6,7 +6,7 @@ using Pamucuk.UI.Extensions;
 
 namespace Molecula.Workflows.Designer.Controls
 {
-    public class WorkspaceControl : WorkflowItemContainer
+    public class WorkspaceControl : WorkflowItemContainerControl
     {
         public static readonly DependencyProperty NodeLinkStartProperty =
             DependencyProperty.Register(nameof(NodeLinkStart), typeof(Point?), typeof(WorkspaceControl), new PropertyMetadata(default));

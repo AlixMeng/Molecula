@@ -68,14 +68,14 @@
             TopOffset="{Binding VerticalOffset, Mode=TwoWay}">
             <controls:WorkspaceControl.NodeLinkStart>
                 <MultiBinding Converter="{x:Static converter:CoordinatesToPointConverter.Instance}">
-                    <Binding Path="LinkPreviewStartX" />
-                    <Binding Path="LinkPreviewStartY" />
+                    <Binding Path="NodeLinkPreview.LinkPreviewStartX" />
+                    <Binding Path="NodeLinkPreview.LinkPreviewStartY" />
                 </MultiBinding>
             </controls:WorkspaceControl.NodeLinkStart>
             <controls:WorkspaceControl.NodeLinkEnd>
                 <MultiBinding Converter="{x:Static converter:CoordinatesToPointConverter.Instance}">
-                    <Binding Path="LinkPreviewEndX" />
-                    <Binding Path="LinkPreviewEndY" />
+                    <Binding Path="NodeLinkPreview.LinkPreviewEndX" />
+                    <Binding Path="NodeLinkPreview.LinkPreviewEndY" />
                 </MultiBinding>
             </controls:WorkspaceControl.NodeLinkEnd>
         </controls:WorkspaceControl>

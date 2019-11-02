@@ -2,7 +2,7 @@
 
 namespace Molecula.Workflows.Designer.Controls
 {
-    public class WorkflowItemToolboxControl : WorkflowItemContainer
+    public class WorkflowItemToolboxControl : WorkflowItemContainerControl
     {
         static WorkflowItemToolboxControl()
         {
