@@ -10,13 +10,22 @@ namespace Molecula.Abstractions.Workflows.Core
         IEnumerable<IWorkflowItem> Items { get; }
         double HorizontalOffset { get; set; }
         double VerticalOffset { get; set; }
+        double ViewWidth { get; set; }
+        double ViewHeight { get; set; }
+        int Width { get; set; }
+        int Height { get; set; }
+        string Name { get; set; }
+        INodeLinkPreview NodeLinkPreview { get; }
+
+        ICommand ProcessIsCheckedChangedCommand { get; }
+        ICommand ProcessKeyUpCommand { get; }
+        ICommand ProcessKeyDownCommand { get; }
         ICommand AddNodeCommand { get; }
-        ICommand ProcessKeyCommand { get; }
         ICommand StartConnectionCommand { get; }
         ICommand MoveConnectionCommand { get; }
         ICommand StopConnectionCommand { get; }
         ICommand MoveNodeCommand { get; }
-        string Name { get; set; }
+        ICommand ClearSelectionCommand { get; }
 
         void AddNode(Type nodeType);
         void DeleteSelectedItems();

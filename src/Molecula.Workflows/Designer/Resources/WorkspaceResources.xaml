@@ -42,12 +42,15 @@
                     </VisualBrush>
                 </Border.Background>
                 <ItemsControl
-                    Width="10000"
-                    Height="10000"
-                    ItemsSource="{Binding Items}">
+                    Width="{Binding Width}"
+                    Height="{Binding Height}"
+                    ItemsSource="{Binding Items}"
+                    MouseLeftButtonDown="{pmvvm:EventToCommand DataContext.ClearSelectionCommand,
+                                                               RelativeSource={RelativeSource TemplatedParent},
+                                                               EventArgsConverter={x:Static converter:MouseButtonEventArgsConverter.Instance}}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <Canvas />
+                            <Canvas Background="Transparent" IsHitTestVisible="True" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
@@ -62,10 +65,16 @@
 
     <DataTemplate DataType="{x:Type core:Workspace}">
         <controls:WorkspaceControl
-            KeyUp="{pmvvm:EventToCommand ProcessKeyCommand,
-                                         EventArgsConverter={x:Static converter:KeyEventArgsConverter.Instance}}"
-            LeftOffset="{Binding HorizontalOffset, Mode=TwoWay}"
-            TopOffset="{Binding VerticalOffset, Mode=TwoWay}">
+            controls:WorkflowItemControl.IsCheckedChanged="{pmvvm:EventToCommand ProcessIsCheckedChangedCommand,
+                                                                                 EventArgsConverter={x:Static converter:IsCheckedChangedEventArgsConverter.Instance}}"
+            HorizontalScrollOffset="{Binding HorizontalOffset, Mode=TwoWay}"
+            PreviewKeyDown="{pmvvm:EventToCommand ProcessKeyDownCommand,
+                                                  EventArgsConverter={x:Static converter:KeyEventArgsConverter.Instance}}"
+            PreviewKeyUp="{pmvvm:EventToCommand ProcessKeyUpCommand,
+                                                EventArgsConverter={x:Static converter:KeyEventArgsConverter.Instance}}"
+            VerticalScrollOffset="{Binding VerticalOffset, Mode=TwoWay}"
+            ViewportHeight="{Binding ViewHeight, Mode=OneWayToSource}"
+            ViewportWidth="{Binding ViewWidth, Mode=OneWayToSource}">
             <controls:WorkspaceControl.NodeLinkStart>
                 <MultiBinding Converter="{x:Static converter:CoordinatesToPointConverter.Instance}">
                     <Binding Path="NodeLinkPreview.LinkPreviewStartX" />

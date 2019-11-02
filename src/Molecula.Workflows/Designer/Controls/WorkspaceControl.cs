@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 using Pamucuk.UI.Extensions;
 
 namespace Molecula.Workflows.Designer.Controls
@@ -26,40 +27,40 @@ namespace Molecula.Workflows.Designer.Controls
             set => SetValue(NodeLinkEndProperty, value);
         }
 
-        private static readonly DependencyProperty HorizontalScrollOffsetProperty =
+        private static readonly DependencyProperty LeftOffsetProperty =
+            DependencyProperty.Register("LeftOffset", typeof(double), typeof(WorkspaceControl), new PropertyMetadata(default(double), OnLeftOffsetChanged));
+
+        private static void OnLeftOffsetChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+            => d.SetValue(HorizontalScrollOffsetProperty, e.NewValue);
+
+        private static readonly DependencyProperty TopOffsetProperty =
+            DependencyProperty.Register("TopOffset", typeof(double), typeof(WorkspaceControl), new PropertyMetadata(default(double), OnTopOffsetChanged));
+
+        private static void OnTopOffsetChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+            => d.SetValue(VerticalScrollOffsetProperty, e.NewValue);
+
+        private static readonly DependencyProperty ViewWidthProperty =
+            DependencyProperty.Register("ViewWidth", typeof(double), typeof(WorkspaceControl), new PropertyMetadata(default(double), OnViewWidthChanged));
+
+        private static void OnViewWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+            => d.SetValue(ViewportWidthProperty, e.NewValue);
+
+        private static readonly DependencyProperty ViewHeightProperty =
+            DependencyProperty.Register("ViewHeight", typeof(double), typeof(WorkspaceControl), new PropertyMetadata(default(double), OnViewHeightChanged));
+
+        private static void OnViewHeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+            => d.SetValue(ViewportHeightProperty, e.NewValue);
+
+        public static readonly DependencyProperty HorizontalScrollOffsetProperty =
             DependencyProperty.Register(nameof(HorizontalScrollOffset), typeof(double), typeof(WorkspaceControl), new PropertyMetadata(default(double), OnHorizontalScrollOffsetChanged));
 
-        private double HorizontalScrollOffset
+        public double HorizontalScrollOffset
         {
             get => (double)GetValue(HorizontalScrollOffsetProperty);
             set => SetValue(HorizontalScrollOffsetProperty, value);
         }
 
         private static void OnHorizontalScrollOffsetChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-            => d.SetValue(LeftOffsetProperty, e.NewValue);
-
-        private static readonly DependencyProperty VerticalScrollOffsetProperty =
-            DependencyProperty.Register(nameof(VerticalScrollOffset), typeof(double), typeof(WorkspaceControl), new PropertyMetadata(default(double), OnVerticalScrollOffsetChanged));
-
-        private double VerticalScrollOffset
-        {
-            get => (double)GetValue(VerticalScrollOffsetProperty);
-            set => SetValue(VerticalScrollOffsetProperty, value);
-        }
-
-        private static void OnVerticalScrollOffsetChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-            => d.SetValue(TopOffsetProperty, e.NewValue);
-
-        public static readonly DependencyProperty LeftOffsetProperty =
-            DependencyProperty.Register(nameof(LeftOffset), typeof(double), typeof(WorkspaceControl), new PropertyMetadata(default(double), OnLeftOffsetChanged));
-
-        public double LeftOffset
-        {
-            get => (double)GetValue(LeftOffsetProperty);
-            set => SetValue(LeftOffsetProperty, value);
-        }
-
-        private static void OnLeftOffsetChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (!(e.NewValue is double left)) return;
             var viewer = d.FindChild<ScrollViewer>("PART_ScrollViewer", false);
@@ -67,16 +68,34 @@ namespace Molecula.Workflows.Designer.Controls
                 viewer.ScrollToHorizontalOffset(left);
         }
 
-        public static readonly DependencyProperty TopOffsetProperty =
-            DependencyProperty.Register(nameof(TopOffset), typeof(double), typeof(WorkspaceControl), new PropertyMetadata(default(double), OnTopOffsetChanged));
+        public static readonly DependencyProperty VerticalScrollOffsetProperty =
+            DependencyProperty.Register(nameof(VerticalScrollOffset), typeof(double), typeof(WorkspaceControl), new PropertyMetadata(default(double), OnVerticalScrollOffsetChanged));
 
-        public double TopOffset
+        public double VerticalScrollOffset
         {
-            get => (double)GetValue(TopOffsetProperty);
-            set => SetValue(TopOffsetProperty, value);
+            get => (double)GetValue(VerticalScrollOffsetProperty);
+            set => SetValue(VerticalScrollOffsetProperty, value);
         }
 
-        private static void OnTopOffsetChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        public static readonly DependencyProperty ViewportWidthProperty =
+            DependencyProperty.Register(nameof(ViewportWidth), typeof(double), typeof(WorkspaceControl), new PropertyMetadata(default(double)));
+
+        public double ViewportWidth
+        {
+            get => (double)GetValue(ViewportWidthProperty);
+            set => SetValue(ViewportWidthProperty, value);
+        }
+
+        public static readonly DependencyProperty ViewportHeightProperty =
+            DependencyProperty.Register(nameof(ViewportHeight), typeof(double), typeof(WorkspaceControl), new PropertyMetadata(default(double)));
+
+        public double ViewportHeight
+        {
+            get => (double)GetValue(ViewportHeightProperty);
+            set => SetValue(ViewportHeightProperty, value);
+        }
+
+        private static void OnVerticalScrollOffsetChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (!(e.NewValue is double top)) return;
             var viewer = d.FindChild<ScrollViewer>("PART_ScrollViewer", false);
@@ -92,28 +111,35 @@ namespace Molecula.Workflows.Designer.Controls
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            BindScrollOffsets();
+            BindScrollViewer();
         }
 
-        private void BindScrollOffsets()
+        private void BindScrollViewer()
         {
             var viewer = this.FindChild<ScrollViewer>("PART_ScrollViewer", false);
 
-            var horizontalOffsetBinding = CreateScrollOffsetBinding(viewer, ScrollViewer.HorizontalOffsetProperty);
-            BindingOperations.SetBinding(this, HorizontalScrollOffsetProperty, horizontalOffsetBinding);
+            var horizontalOffsetBinding = CreateScrollViewerBinding(viewer, ScrollViewer.HorizontalOffsetProperty, BindingMode.OneWay);
+            BindingOperations.SetBinding(this, LeftOffsetProperty, horizontalOffsetBinding);
 
-            var verticalOffsetBinding = CreateScrollOffsetBinding(viewer, ScrollViewer.VerticalOffsetProperty);
-            BindingOperations.SetBinding(this, VerticalScrollOffsetProperty, verticalOffsetBinding);
+            var verticalOffsetBinding = CreateScrollViewerBinding(viewer, ScrollViewer.VerticalOffsetProperty, BindingMode.OneWay);
+            BindingOperations.SetBinding(this, TopOffsetProperty, verticalOffsetBinding);
+
+            var viewportWidthBinding = CreateScrollViewerBinding(viewer, ScrollViewer.ViewportWidthProperty, BindingMode.OneWay);
+            BindingOperations.SetBinding(this, ViewWidthProperty, viewportWidthBinding);
+
+            var viewportHeightBinding = CreateScrollViewerBinding(viewer, ScrollViewer.ViewportHeightProperty, BindingMode.OneWay);
+            BindingOperations.SetBinding(this, ViewHeightProperty, viewportHeightBinding);
         }
 
-        private static Binding CreateScrollOffsetBinding(ScrollViewer viewer, DependencyProperty property)
+        private static Binding CreateScrollViewerBinding(ScrollViewer viewer, DependencyProperty property, BindingMode mode)
         {
-            var offsetBinding = new Binding
+            var binding = new Binding
             {
                 Path = new PropertyPath("(0)", property),
                 Source = viewer,
+                Mode = mode,
             };
-            return offsetBinding;
+            return binding;
         }
     }
 }
