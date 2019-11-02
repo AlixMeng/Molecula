@@ -115,7 +115,7 @@ namespace Molecula.Workflows.Designer.Core
 
         public void DeleteSelectedItems()
             => Items
-                .Where(item => item.IsChecked)
+                .Where(item => item.IsChecked && ((item as IBaseNode)?.IsRemovable ?? true))
                 .ToArray()
                 .ForEach(Remove);
 
