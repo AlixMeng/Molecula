@@ -33,6 +33,7 @@ namespace Molecula.Workflows.Designer.Core
                     .CurrentDomain
                     .GetAssemblies()
                     .AsParallel()
+                    .Where(asm => !asm.IsDynamic)
                     .SelectMany(asm => asm.ExportedTypes)
                     .Where(typeof(IBaseNode).IsAssignableFrom)
                     .Where(type => !typeof(IStartNode).IsAssignableFrom(type))
