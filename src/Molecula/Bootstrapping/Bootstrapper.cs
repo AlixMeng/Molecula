@@ -74,6 +74,9 @@ namespace Molecula.Bootstrapping
 
         private void RegisterWorkflowDesigner()
         {
+            _ioc.Register(() => new CreateWorkflowItem<IBaseNode>(type => (IBaseNode) _ioc.GetNewInstance(type)));
+            _ioc.Register(() => new CreateWorkflowItem<INodeLink>(type => (INodeLink)_ioc.GetNewInstance(type)));
+            _ioc.Register(() => new CreateWorkflowItem<INodeLinkPreview>(type => (INodeLinkPreview)_ioc.GetNewInstance(type)));
             _ioc.Register<WorkflowDesignerViewModel, IWorkflowDesignerViewModel>();
             _ioc.Register<Workspace, IWorkspace>();
             _ioc.Register<WorkflowItemToolbox, IWorkflowItemToolbox>();

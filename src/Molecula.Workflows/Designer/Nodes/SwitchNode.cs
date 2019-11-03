@@ -1,6 +1,5 @@
 ﻿using Molecula.Abstractions.Workflows.Core;
 using Molecula.Abstractions.Workflows.Nodes;
-using Molecula.Workflows.Designer.Core;
 
 namespace Molecula.Workflows.Designer.Nodes
 {
@@ -10,6 +9,7 @@ namespace Molecula.Workflows.Designer.Nodes
         {
             OutputType = NodeOutputType.Multiple;
             Text = "Switch";
+            LinkOutputType = typeof(IConditionalLink);
         }
     }
 }

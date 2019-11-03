@@ -36,6 +36,18 @@ namespace Molecula.Workflows.Designer.Nodes
             protected set => Set(ref _isRemovable, value);
         }
 
+        private Type _linkOutputType = typeof(INodeLink);
+        public Type LinkOutputType
+        {
+            get => _linkOutputType;
+            protected set
+            {
+                if(!typeof(INodeLink).IsAssignableFrom(value))
+                    throw new InvalidOperationException($"Type must be assignable to {typeof(INodeLink)}");
+                Set(ref _linkOutputType, value);
+            }
+        }
+
         private NodeOutputType _outputType = NodeOutputType.Single;
         public NodeOutputType OutputType
         {
@@ -80,34 +92,6 @@ namespace Molecula.Workflows.Designer.Nodes
         {
             get => _height;
             set => Set(ref _height, value);
-        }
-
-        private double? _connectStartX;
-        public double? ConnectStartX
-        {
-            get => _connectStartX;
-            set => Set(ref _connectStartX, value);
-        }
-
-        private double? _connectStartY;
-        public double? ConnectStartY
-        {
-            get => _connectStartY;
-            set => Set(ref _connectStartY, value);
-        }
-
-        private double? _connectEndX;
-        public double? ConnectEndX
-        {
-            get => _connectEndX;
-            set => Set(ref _connectEndX, value);
-        }
-
-        private double? _connectEndY;
-        public double? ConnectEndY
-        {
-            get => _connectEndY;
-            set => Set(ref _connectEndY, value);
         }
 
         protected BaseNode()

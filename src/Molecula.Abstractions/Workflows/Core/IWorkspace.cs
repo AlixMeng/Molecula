@@ -5,7 +5,7 @@ using System.Windows.Input;
 
 namespace Molecula.Abstractions.Workflows.Core
 {
-    public interface IWorkspace : INotifyPropertyChanged
+    public interface IWorkspace : IWorkflowItemContainer, INotifyPropertyChanged
     {
         IEnumerable<IWorkflowItem> Items { get; }
         double HorizontalOffset { get; set; }
@@ -20,11 +20,7 @@ namespace Molecula.Abstractions.Workflows.Core
         ICommand ProcessIsCheckedChangedCommand { get; }
         ICommand ProcessKeyUpCommand { get; }
         ICommand ProcessKeyDownCommand { get; }
-        ICommand AddNodeCommand { get; }
-        ICommand StartConnectionCommand { get; }
-        ICommand MoveConnectionCommand { get; }
-        ICommand StopConnectionCommand { get; }
-        ICommand MoveNodeCommand { get; }
+        ICommand DropNodeCommand { get; }
         ICommand ClearSelectionCommand { get; }
 
         void AddNode(Type nodeType);

@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Pamucuk.Mvvm" Version="5.0.0" />
+    <PackageReference Include="Pamucuk.Mvvm" Version="5.1.0" />
   </ItemGroup>
 
 </Project>

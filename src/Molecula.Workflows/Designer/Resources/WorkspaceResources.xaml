@@ -50,7 +50,7 @@
                                                                EventArgsConverter={x:Static converter:MouseButtonEventArgsConverter.Instance}}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <Canvas Background="Transparent" IsHitTestVisible="True" />
+                            <Canvas x:Name="PART_ItemsContainer" Background="Transparent" IsHitTestVisible="True" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>

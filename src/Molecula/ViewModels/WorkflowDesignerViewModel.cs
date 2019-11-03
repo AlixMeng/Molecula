@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using Molecula.Abstractions.Workflows.Core;
+using Molecula.Abstractions.Workflows.Nodes;
 using Molecula.Abstractions.Workflows.ViewModels;
 using Molecula.Workflows.Designer.Nodes;
 
@@ -31,7 +32,7 @@ namespace Molecula.ViewModels
         {
             var workspace = workspaceFactory();
             workspace.Name = "Test";
-            workspace.AddNode(typeof(StartNode));
+            workspace.AddNode(typeof(IStartNode));
             Workspaces.Add(workspace);
             CurrentWorkspace = workspace;
             WorkflowItemToolbox = toolbox;

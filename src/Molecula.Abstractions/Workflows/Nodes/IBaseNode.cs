@@ -11,6 +11,7 @@ namespace Molecula.Abstractions.Workflows.Nodes
         bool HasInput { get; }
         bool IsRemovable { get; }
         NodeOutputType OutputType { get; }
+        Type LinkOutputType { get; }
         bool HasOutput { get; }
         ObservableCollection<Guid> OutputNodes { get; }
         double X { get; set; }

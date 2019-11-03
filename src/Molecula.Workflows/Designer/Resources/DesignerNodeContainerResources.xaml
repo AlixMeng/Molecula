@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:Molecula.Workflows.Designer.Controls">
+
+    <ControlTemplate x:Key="DesignerNodeContainerControlTemplate" TargetType="controls:DesignerNodeContainerControl">
+        <ContentPresenter Content="{TemplateBinding Content}" />
+    </ControlTemplate>
+
+    <Style TargetType="controls:DesignerNodeContainerControl">
+        <Setter Property="Template" Value="{StaticResource DesignerNodeContainerControlTemplate}" />
+    </Style>
+
+</ResourceDictionary>

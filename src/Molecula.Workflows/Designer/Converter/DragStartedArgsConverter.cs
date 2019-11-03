@@ -10,24 +10,24 @@ using Pamucuk.UI.Extensions;
 
 namespace Molecula.Workflows.Designer.Converter
 {
-    public class DragDeltaArgsConverter : IMultiValueConverter
+    public class DragStartedArgsConverter : IMultiValueConverter
     {
-        public static readonly IMultiValueConverter Instance = new DragDeltaArgsConverter();
+        public static readonly IMultiValueConverter Instance = new DragStartedArgsConverter();
 
-        private static readonly (double HorizontalChange, double VerticalChange, double X, double Y, double Width, double Height, object DataContext)
+        private static readonly (double HorizontalOffset, double VerticalOffset, double X, double Y, double Width, double Height, object DataContext) 
             DefaultConvertResult = (0.0, 0.0, 0.0, 0.0, 0.0, 0.0, null);
 
-        private DragDeltaArgsConverter()
+        private DragStartedArgsConverter()
         {
         }
 
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            var args = values?.OfType<DragDeltaEventArgs>().FirstOrDefault();
+            var args = values?.OfType<DragStartedEventArgs>().FirstOrDefault();
             var node = (args?.OriginalSource as FrameworkElement)?.FindParent<NodeControl>(false);
             return node == null
                 ? DefaultConvertResult
-                : (args.HorizontalChange, args.VerticalChange, X: Canvas.GetLeft(node), Y: Canvas.GetTop(node), node.Width, node.Height, node.DataContext);
+                : (args.HorizontalOffset, args.VerticalOffset, X: Canvas.GetLeft(node), Y: Canvas.GetTop(node), node.Width, node.Height, node.DataContext);
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

@@ -1,46 +1,95 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Data;
 using System.Windows.Input;
-using Molecula.Workflows.Designer.Nodes;
+using System.Windows.Markup;
+using System.Windows.Media;
+using Pamucuk.UI.Extensions;
 
 namespace Molecula.Workflows.Designer.Controls
 {
-    public class DesignerNodeControl : Button
+    [ContentProperty(nameof(Content))]
+    public class DesignerNodeControl : Thumb
     {
-        public static readonly DependencyProperty NodeTypeProperty =
-            DependencyProperty.Register(nameof(NodeType), typeof(Type), typeof(DesignerNodeControl), new PropertyMetadata(default, OnNodeTypeChanged));
-
-        public Type NodeType
-        {
-            get => (Type)GetValue(NodeTypeProperty);
-            set => SetValue(NodeTypeProperty, value);
-        }
-
-        private static void OnNodeTypeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (!(d is DesignerNodeControl designer)) return;
-            if (!(e.NewValue is Type type)) return;
-            var node = (BaseNode)Activator.CreateInstance(designer.NodeType);
-            designer.Content = node;
-        }
-
         static DesignerNodeControl()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DesignerNodeControl), new FrameworkPropertyMetadata(typeof(DesignerNodeControl)));
+            EventManager.RegisterClassHandler(typeof(DesignerNodeControl), DragStartedEvent, new DragStartedEventHandler(OnDragStarted));
+            EventManager.RegisterClassHandler(typeof(DesignerNodeControl), DragDeltaEvent, new DragDeltaEventHandler(OnDragDelta));
         }
 
-        protected override void OnPreviewMouseDown(MouseButtonEventArgs e)
+        private Window _nodePreview;
+
+        public static readonly DependencyProperty ContentProperty =
+            DependencyProperty.Register(nameof(Content), typeof(object), typeof(DesignerNodeControl));
+
+        public object Content
         {
-            base.OnPreviewMouseDown(e);
-            e.Handled = true;
+            get => GetValue(ContentProperty);
+            set => SetValue(ContentProperty, value);
+        }
+        
+        public static readonly DependencyProperty DragStartPointProperty =
+            DependencyProperty.Register(nameof(DragStartPoint), typeof(Point), typeof(DesignerNodeControl));
+
+        public Point DragStartPoint
+        {
+            get => (Point) GetValue(DragStartPointProperty);
+            set => SetValue(DragStartPointProperty, value);
+        }
+        
+        public static readonly DependencyProperty DragStartScreenPointProperty =
+            DependencyProperty.Register(nameof(DragStartScreenPoint), typeof(Point), typeof(DesignerNodeControl));
+
+        public Point DragStartScreenPoint
+        {
+            get => (Point) GetValue(DragStartScreenPointProperty);
+            set => SetValue(DragStartScreenPointProperty, value);
         }
 
-        protected override void OnPreviewMouseUp(MouseButtonEventArgs e)
+        protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            base.OnPreviewMouseUp(e);
-            e.Handled = true;
-            OnClick();
+            base.OnPreviewMouseLeftButtonDown(e);
+            DragStartPoint = e.GetPosition(this);
+            DragStartScreenPoint = PointToScreen(new Point(0, 0));
         }
+
+        protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonUp(e);
+            _nodePreview?.Close();
+            _nodePreview = null;
+            DragStartPoint = default;
+            DragStartScreenPoint = default;
+        }
+
+        private static void OnDragStarted(object sender, DragStartedEventArgs e)
+        {
+            if (!(sender is DesignerNodeControl node)) return;
+            var point = node.PointToScreen(new Point(0, 0));
+            var window = new Window
+            {
+                Style = node.TryFindResource("DesignerNodeControlWindowStyle") as Style,
+                Owner = node.FindParent<Window>(false),
+                Left = point.X,
+                Top = point.Y,
+                WindowStartupLocation = WindowStartupLocation.Manual,
+                Content = node.Content
+            };
+            window.Show();
+            node._nodePreview = window;
+        }
+
+        private static void OnDragDelta(object sender, DragDeltaEventArgs e)
+        {
+            if (!(sender is DesignerNodeControl node)) return;
+            var window = node._nodePreview;
+            var point = node.DragStartScreenPoint;
+            window.Left = point.X + e.HorizontalChange;
+            window.Top = point.Y + e.VerticalChange;
+        }
+
     }
 }

@@ -80,7 +80,7 @@
                                                          RelativeSource={RelativeSource FindAncestor,
                                                                                         AncestorType={x:Type controls:WorkflowItemContainerControl}}}"
                         DragStarted="{pmvvm:EventToCommand Path=DataContext.StartConnectionCommand,
-                                                           EventArgsConverter={x:Static converter:NodeDragStartedArgsConverter.Instance},
+                                                           EventArgsConverter={x:Static converter:DragStartedArgsConverter.Instance},
                                                            RelativeSource={RelativeSource FindAncestor,
                                                                                           AncestorType={x:Type controls:WorkflowItemContainerControl}}}"
                         Visibility="{Binding HasOutput, Converter={StaticResource BoolToVisibilityConverter}}">

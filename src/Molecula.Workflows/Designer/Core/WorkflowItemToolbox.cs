@@ -35,13 +35,12 @@ namespace Molecula.Workflows.Designer.Core
                     .AsParallel()
                     .Where(asm => !asm.IsDynamic)
                     .SelectMany(asm => asm.ExportedTypes)
+                    .Where(type => type.IsInterface)
                     .Where(typeof(IBaseNode).IsAssignableFrom)
+                    .Where(type => type != typeof(IBaseNode))
                     .Where(type => !typeof(IStartNode).IsAssignableFrom(type))
-                    .Where(type => type.IsClass)
-                    .Where(type => !type.IsAbstract)
                     .Where(type => !type.IsGenericType)
                     .Where(type => !type.IsGenericTypeDefinition)
-                    .Where(type => type.GetConstructors().Any(ctor => !ctor.GetParameters().Any()))
                     .OrderBy(type => $"{type.Namespace}.{type.Name}")
                     .Select(CreateDesignerNode);
             var items = new ObservableCollection<IDesignerNode>(nodes);

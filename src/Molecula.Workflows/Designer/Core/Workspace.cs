@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Windows;
 using System.Windows.Input;
 using Molecula.Abstractions.Workflows.Core;
 using Molecula.Abstractions.Workflows.Nodes;
 using Molecula.Core.Extensions;
-using Molecula.Workflows.Designer.Nodes;
 using Pamucuk.Mvvm.Commands;
 using Pamucuk.Mvvm.Observables;
 
@@ -16,6 +15,9 @@ namespace Molecula.Workflows.Designer.Core
 {
     public class Workspace : ObservableObject, IWorkspace
     {
+        private readonly CreateWorkflowItem<IBaseNode> _nodeFactory;
+        private readonly CreateWorkflowItem<INodeLink> _linkFactory;
+        private readonly CreateWorkflowItem<INodeLinkPreview> _linkPreviewFactory;
         private bool _isMultiSelectMode;
         private bool _isProcessIsCheckedDisabled;
 
@@ -81,31 +83,51 @@ namespace Molecula.Workflows.Designer.Core
         public ICommand ProcessIsCheckedChangedCommand { get; }
         public ICommand ProcessKeyDownCommand { get; }
         public ICommand ProcessKeyUpCommand { get; }
-        public ICommand AddNodeCommand { get; }
+        public ICommand DropNodeCommand { get; }
         public ICommand StartConnectionCommand { get; }
         public ICommand MoveConnectionCommand { get; }
         public ICommand StopConnectionCommand { get; }
         public ICommand MoveNodeCommand { get; }
         public ICommand ClearSelectionCommand { get; }
 
-        public Workspace(ICommandFactory commandFactory, Func<INodeLinkPreview> nodeLinkPreviewFactory)
+        public Workspace(
+            ICommandFactory commandFactory,
+            Func<CreateWorkflowItem<IBaseNode>> getNodeFactory,
+            Func<CreateWorkflowItem<INodeLink>> getLinkFactory,
+            Func<CreateWorkflowItem<INodeLinkPreview>> getLinkPreviewFactory)
         {
+            _nodeFactory = getNodeFactory();
+            _linkFactory = getLinkFactory();
+            _linkPreviewFactory = getLinkPreviewFactory();
             ProcessIsCheckedChangedCommand = commandFactory.Create<IWorkflowItem>(ProcessIsCheckedChanged, CanProcessIsCheckedChanged);
             ProcessKeyDownCommand = commandFactory.Create<(Key Key, ModifierKeys Modifiers)?>(ProcessKeyDown);
             ProcessKeyUpCommand = commandFactory.Create<(Key Key, ModifierKeys Modifiers)?>(ProcessKeyUp);
-            AddNodeCommand = commandFactory.Create<Type>(AddNode);
+            DropNodeCommand = commandFactory.Create<(double X, double Y, IDesignerNode Item)>(DropNode, CanDropNode);
             StartConnectionCommand = commandFactory.Create<(double HorizontalOffset, double VerticalOffset, double X, double Y, double Width, double Height, object Item)>(StartConnection);
             MoveConnectionCommand = commandFactory.Create<(double HorizontalChange, double VerticalChange, double X, double Y, double Width, double Height, object Item)>(MoveConnection);
             StopConnectionCommand = commandFactory.Create<(double HorizontalChange, double VerticalChange, double X, double Y, double Width, double Height, object Item)>(StopConnection);
             MoveNodeCommand = commandFactory.Create<(double HorizontalChange, double VerticalChange, double X, double Y, double Width, double Height, object Item)>(MoveSelection);
             ClearSelectionCommand = commandFactory.Create<object>(ProcessClearSelection, CanProcessClearSelection);
-            NodeLinkPreview = nodeLinkPreviewFactory();
-            _items.Add(NodeLinkPreview);
+            NodeLinkPreview = _linkPreviewFactory(typeof(INodeLinkPreview));
+            Add(NodeLinkPreview);
+        }
+
+        private static bool CanDropNode((double X, double Y, IDesignerNode Item) dragComplete)
+            => dragComplete.X > 0 && dragComplete.Y > 0 && dragComplete.Item != null;
+
+        private void DropNode((double X, double Y, IDesignerNode Item) dragComplete)
+        {
+            var node = _nodeFactory(dragComplete.Item.NodeType);
+
+            node.X = dragComplete.X;
+            node.Y = dragComplete.Y;
+
+            Add(node);
         }
 
         public void AddNode(Type nodeType)
         {
-            var node = (BaseNode)Activator.CreateInstance(nodeType);
+            var node = _nodeFactory(nodeType);
 
             node.X = HorizontalOffset + 10;
             node.Y = VerticalOffset + 10;
@@ -236,12 +258,6 @@ namespace Molecula.Workflows.Designer.Core
             NodeLinkPreview.LinkPreviewEndY = default;
         }
 
-        private bool CanMoveSelection((double HorizontalChange, double VerticalChange, double X, double Y, double Width, double Height, object Item) moveDelta)
-        {
-            var rectangle = GetSelectionRectangle(moveDelta.Item);
-            return rectangle.Left + moveDelta.HorizontalChange > 0 || rectangle.Top + moveDelta.VerticalChange > 0;
-        }
-
         private void MoveSelection((double HorizontalChange, double VerticalChange, double X, double Y, double Width, double Height, object Item) moveDelta)
         {
             var mainItem = (IBaseNode) moveDelta.Item;
@@ -277,7 +293,7 @@ namespace Molecula.Workflows.Designer.Core
                 rectangle.Height
             );
 
-        private Rect GetSelectionRectangle(object mainSelection = null)
+        private Rect GetSelectionRectangle(IWorkflowItem mainSelection = null)
         {
             var selection = GetSelectedItems<IBaseNode>(mainSelection).ToList();
             var rectangle = selection
@@ -288,21 +304,21 @@ namespace Molecula.Workflows.Designer.Core
             return new Rect(rectangle.Left, rectangle.Top, rectangle.Right - rectangle.Left, rectangle.Bottom - rectangle.Top);
         }
 
-        private IEnumerable<TItem> GetSelectedItems<TItem>(object mainSelection = null) where TItem : IWorkflowItem
+        private IEnumerable<TItem> GetSelectedItems<TItem>(IWorkflowItem mainSelection = null) where TItem : IWorkflowItem
             => _items
                 .OfType<TItem>()
                 .Where(node => Equals(node, mainSelection) || node.IsChecked);
 
-        private bool IsLinkAllowed(double? startX, double? startY, Func<BaseNode, bool> isAllowed)
+        private bool IsLinkAllowed(double? startX, double? startY, Func<IBaseNode, bool> isAllowed)
         {
             var node = FindNode(startX, startY);
             return isAllowed(node);
         }
 
-        private BaseNode FindNode(double? x, double? y)
-            => _items.OfType<BaseNode>().FirstOrDefault(item => IsNodeHit(item, x, y));
+        private IBaseNode FindNode(double? x, double? y)
+            => Items.OfType<IBaseNode>().FirstOrDefault(item => IsNodeHit(item, x, y));
 
-        private static bool IsNodeHit(BaseNode node, double? x, double? y)
+        private static bool IsNodeHit(IBaseNode node, double? x, double? y)
             => node.X <= x
                && x <= node.X + node.Width
                && node.Y <= y
@@ -314,30 +330,31 @@ namespace Molecula.Workflows.Designer.Core
             PostProcessRemove((dynamic)item);
         }
 
-        private static void PostProcessRemove(NodeLink link)
+        private static void PostProcessRemove(INodeLink link)
         {
             link.StartNode.OutputNodes.Remove(link.EndNode.ItemId);
         }
 
-        private void PostProcessRemove(BaseNode node)
+        private void PostProcessRemove(IBaseNode node)
         {
             Items
-                .OfType<NodeLink>()
+                .OfType<INodeLink>()
                 .Where(link => link.StartNode == node || link.EndNode == node)
                 .ToArray()
                 .ForEach(Remove);
         }
 
-        private void AddOutputLinksFromNode(BaseNode node)
-            => node.OutputNodes.ForEach(nodeId => AddLink(node, nodeId));
+        private void AddOutputLinksFromNode(IBaseNode node)
+            => node.OutputNodes.ForEach(nodeId => AddLink(node.ItemId, nodeId));
 
-        private void AddLink(BaseNode startNode, Guid endNodeId)
+        private void AddLink(Guid startNodeId, Guid endNodeId)
         {
+            var startNode = FindNodeById(startNodeId);
             var endNode = FindNodeById(endNodeId);
             AddLink(startNode, endNode);
         }
 
-        private void AddLink(BaseNode startNode, BaseNode endNode)
+        private void AddLink(IBaseNode startNode, IBaseNode endNode)
         {
             if (startNode.OutputType == NodeOutputType.Single)
             {
@@ -348,25 +365,26 @@ namespace Molecula.Workflows.Designer.Core
             Add(link);
         }
 
-        private void RemoveLinks(BaseNode startNode)
+        private void RemoveLinks(IBaseNode startNode)
         {
-            var links = _items.OfType<NodeLink>().Where(link => link.StartNode == startNode).ToList();
+            var links = _items.OfType<INodeLink>().Where(link => link.StartNode == startNode).ToList();
             links.ForEach(link => _items.Remove(link));
         }
 
-        private BaseNode FindNodeById(Guid endNodeId)
+        private IBaseNode FindNodeById(Guid endNodeId)
             => Items
-                .OfType<BaseNode>()
+                .OfType<IBaseNode>()
                 .FirstOrDefault(node => node.ItemId == endNodeId);
 
-        private static NodeLink CreateLink(BaseNode startNode, BaseNode endNode)
-            => new NodeLink
-            {
-                StartNode = startNode,
-                EndNode = endNode,
-            };
+        private INodeLink CreateLink(IBaseNode startNode, IBaseNode endNode)
+        {
+            var link = _linkFactory(typeof(INodeLink));
+            link.StartNode = startNode;
+            link.EndNode = endNode;
+            return link;
+        }
 
-        private void Add(WorkflowItem item)
+        private void Add(IWorkflowItem item)
             => _items.Add(item);
     }
 }

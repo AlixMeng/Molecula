@@ -10,20 +10,20 @@ using Pamucuk.UI.Extensions;
 
 namespace Molecula.Workflows.Designer.Converter
 {
-    public class DragDeltaArgsConverter : IMultiValueConverter
+    public class DragCompletedArgsConverter : IMultiValueConverter
     {
-        public static readonly IMultiValueConverter Instance = new DragDeltaArgsConverter();
+        public static readonly IMultiValueConverter Instance = new DragCompletedArgsConverter();
 
         private static readonly (double HorizontalChange, double VerticalChange, double X, double Y, double Width, double Height, object DataContext)
             DefaultConvertResult = (0.0, 0.0, 0.0, 0.0, 0.0, 0.0, null);
 
-        private DragDeltaArgsConverter()
+        private DragCompletedArgsConverter()
         {
         }
 
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            var args = values?.OfType<DragDeltaEventArgs>().FirstOrDefault();
+            var args = values?.OfType<DragCompletedEventArgs>().FirstOrDefault();
             var node = (args?.OriginalSource as FrameworkElement)?.FindParent<NodeControl>(false);
             return node == null
                 ? DefaultConvertResult

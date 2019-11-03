@@ -8,5 +8,6 @@ namespace Molecula.Abstractions.Workflows.Core
         Guid ItemId { get; set; }
         bool IsChecked { get; set; }
         string ItemType { get; }
+
     }
 }

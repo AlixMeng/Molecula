@@ -2,6 +2,7 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="DesignerNodeResources.xaml" />
+        <ResourceDictionary Source="DesignerNodeContainerResources.xaml" />
         <ResourceDictionary Source="NodeInputResources.xaml" />
         <ResourceDictionary Source="NodeLinkPreviewResources.xaml" />
         <ResourceDictionary Source="NodeLinkResources.xaml" />
