@@ -67,22 +67,7 @@ namespace Molecula.Workflows.Designer.Converter
 
             var point = nodeControl.TranslatePoint(currentPoint, window);
 
-            var children = new List<WorkspaceControl>();
-
-            HitTestResultBehavior CheckHitTestResult(HitTestResult result)
-            {
-                var behavior = HitTestResultBehavior.Continue;
-                if ((result.VisualHit is WorkspaceControl hit || (hit = result.VisualHit.FindParent<WorkspaceControl>(false)) != null)
-                    && hit.Visibility == Visibility.Visible)
-                {
-                    children.Add(hit);
-                    behavior = HitTestResultBehavior.Stop;
-                }
-                return behavior;
-            }
-
-            VisualTreeHelper.HitTest(window, null, CheckHitTestResult, new PointHitTestParameters(point));
-            return children.FirstOrDefault();
+            return window.FindElementByPoint<WorkspaceControl>(point);
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
