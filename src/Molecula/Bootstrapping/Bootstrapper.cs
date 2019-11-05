@@ -53,7 +53,7 @@ namespace Molecula.Bootstrapping
                     programId =>
                     {
                         var type = (Application.Current.TryFindResource($"{programId}.Content.Template") as DataTemplate)?.DataType as Type;
-                        if (type != null)
+                        if (type != null && !typeof(IProgramViewModel).IsAssignableFrom(type))
                         {
                             return _ioc.GetNewInstance(type) as IViewModelBase;
                         }
