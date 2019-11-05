@@ -7,11 +7,14 @@
     xmlns:play="http://schemas.pamucuk.com/pamucuk/2019/layout/xaml"
     xmlns:pmvvm="http://schemas.pamucuk.com/pamucuk/2019/mvvm/xaml"
     xmlns:pwin="http://schemas.pamucuk.com/pamucuk/2019/windows/xaml"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime"
     xmlns:viewModels="clr-namespace:Molecula.Abstractions.ViewModels;assembly=Molecula.Abstractions">
 
     <converter:IsKeyConverter x:Key="IsKeyConverter" />
 
     <converter:PasswordChangedConverter x:Key="PasswordChangedConverter" />
+
+    <system:Boolean x:Key="BoolTrue">True</system:Boolean>
 
     <DataTemplate x:Key="Login.Content.Template" DataType="{x:Type viewModels:ILoginViewModel}">
         <Border
@@ -50,6 +53,7 @@
                         Margin="0,0,2,0"
                         extensions:FocusExtension.FocusId="Login"
                         Command="{Binding LoginCommand}"
+                        CommandParameter="{StaticResource BoolTrue}"
                         Content="{DynamicResource Login.Login.Button}" />
                     <Button
                         Margin="2,0,0,0"
